@@ -1,10 +1,10 @@
 <template>
  <form action="">
-   <input type="text">First name<br>
-   <input type="text">Last name<br>
-   <input type="text">Email<br>
-   <input type="text">Phone-number<br>
-   <input type="text">Password<br>
+   <input type="text" id="firstNameField">First name<br>
+   <input type="text" id="lastNameField">Last name<br>
+   <input type="text" id="emailField">Email<br>
+   <input type="text" id="phoneNumberField">Phone-number<br>
+   <input type="text" id="passwordField">Password<br>
    <input type="submit">
  </form>
 </template>

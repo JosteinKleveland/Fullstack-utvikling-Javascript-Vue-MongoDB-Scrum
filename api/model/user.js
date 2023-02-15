@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: false,
         trim: true,
-        unique: [true, 'Password already in database'],
+        unique: [true, 'Number already in database'],
         minlength: [2, 'Number too short'],
         maxlength: [32, 'Number too long']
     },

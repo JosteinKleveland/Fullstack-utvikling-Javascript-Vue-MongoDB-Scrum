@@ -31,8 +31,9 @@ export default {
         }
     },
     async mounted() {
-    const response = await axios.get("../../api/routes/login");
+    const response = await axios.get("/api/users");
     this.users = response.data;
+    console.log(this.users)
   },
   methods: {
     async addUser(e) {

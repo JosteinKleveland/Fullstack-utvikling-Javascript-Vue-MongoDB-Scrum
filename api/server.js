@@ -21,6 +21,7 @@ mongoose.connect(process.env.DATABASE || "mongodb+srv://Group47-ToolTime:AQQUras
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use("/api",userRoutes);
+app.use("/api", require("./route/routes"));
 
 app.listen(process.env.PORT || 5173, ()=>{
     console.log("Server running on port 5173");

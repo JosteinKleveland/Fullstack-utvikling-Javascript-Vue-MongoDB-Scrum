@@ -1,4 +1,4 @@
-const User = require('../model/user')
+const User = require('../model/user');
 exports.signin = async(req, res, next)=>{
 
     try {

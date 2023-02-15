@@ -1,9 +1,9 @@
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+ host: 'localhost',
  plugins: [vue()],
  test:{
    globals:true,
@@ -13,7 +13,7 @@ export default defineConfig({
     devServer: {
       proxy: {
         '/api': {
-          target: 'http://localhost:5050',
+          target: 'http://localhost:5173',
         },
       },
     },

@@ -4,9 +4,16 @@ require('dotenv').config();
 const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const cors = require('cors')
+//const cors = require('cors')
 
-app.use(cors);
+// Allows http requests from frontend port
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", "http://localhost:8081");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+//app.use(cors);
 // Import routes
 const userRoutes = require('./route/user')
 

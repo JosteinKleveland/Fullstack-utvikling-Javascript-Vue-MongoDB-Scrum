@@ -1,15 +1,16 @@
 <template>
-  <LogIn msg="Welcome to Your Vue.js App"/>
+  <TestComponent msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
-import LogIn from './components/LogIn.vue'
+import TestComponent from './components/TestComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    LogIn
-  }
+    TestComponent
+  },
+  
 }
 </script>
 

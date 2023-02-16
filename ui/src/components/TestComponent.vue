@@ -45,7 +45,7 @@
    
   
   <script>
-  import axios from 'axios';
+  const axios = require("axios");
   export default {
   
     data() {
@@ -85,13 +85,25 @@
           phone: this.phone
   
         };
-        
+        console.log("Test1");
+        const axiosConfig = {
+          method: "post",
+          url: "http://localhost:5050/api/signin",
+          data: formData
+        };
+        console.log("Test2");
+         axios(axiosConfig)
+          .then(response => {
+            console.log("Response: ", response.data);
+          })
+          .catch(error => {
+            console.error("Error: ", error);
+          })
 
         // Call API to authenticate user
-
+        console.log("Etter");
         console.log(JSON.stringify(formData, null, 2))
         // Handle response from server
-
       },
     }
   }

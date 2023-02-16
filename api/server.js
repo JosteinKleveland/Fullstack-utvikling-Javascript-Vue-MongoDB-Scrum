@@ -20,6 +20,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use("/api",userRoutes);
 
-app.listen(process.env.PORT || 5000, ()=>{
-    console.log("Server running on port 5000");
+app.listen(process.env.PORT || 5050, ()=>{
+    console.log("Server running on port 5050");
 });

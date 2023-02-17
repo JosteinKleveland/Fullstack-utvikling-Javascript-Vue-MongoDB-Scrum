@@ -1,9 +1,9 @@
 <template>
-  <LogIn msg="Welcome to Your Vue.js App"/>
+  <AddTool msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
-import LogIn from './components/LogIn.vue'
+import AddTool from './components/AddTool.vue'
 
 export default {
   name: 'App',

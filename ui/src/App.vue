@@ -8,8 +8,9 @@ import AddTool from './components/AddTool.vue'
 export default {
   name: 'App',
   components: {
-    AddTool
-  }
+    LogIn
+  },
+  
 }
 </script>
 

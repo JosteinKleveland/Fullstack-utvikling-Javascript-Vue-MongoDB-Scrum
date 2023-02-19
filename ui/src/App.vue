@@ -1,9 +1,9 @@
 <template>
-  <AddTool />
+  <LogIn />
 </template>
 
 <script setup>
-import AddTool from "./components/AddTool.vue";
+import LogIn from "./components/LogIn.vue";
 </script>
 
 <style></style>

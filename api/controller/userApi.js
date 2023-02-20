@@ -34,4 +34,22 @@ module.exports = class userAPI {
             next(err);
         }
     } 
+    static async fetchUser(req, res, next) {
+        try {
+            const user = await User.findOne({"_id": req.params._id});
+            if(user == null) {
+                res.status(404).json({
+                    success: false,
+                    message: "No user with such ID"
+                })
+            } else {
+                res.status(201).json({
+                success: true,
+                user
+            })
+        }
+        } catch (err) {
+            
+        }
+    }
 }

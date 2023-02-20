@@ -19,6 +19,7 @@ app.use(function (req, res, next) {
 // app.use(cors);
 // Import routes
 const userRoutes = require("./route/user");
+const toolRoutes = require("./route/tool");
 
 //CONNECT DATABASE
 mongoose
@@ -33,6 +34,7 @@ mongoose
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use("/api", userRoutes);
+app.use("/api/tool", toolRoutes);
 
 app.listen(process.env.PORT || 5050, () => {
   console.log("Server running on port 5050");

@@ -35,7 +35,7 @@ const submitForm = () => {
 
   const axiosConfig = {
     method: "post",
-    url: "http://localhost:5050/api/user/signUp",
+    url: "http://localhost:5050/api/user/signIn",
     data: formData,
   };
 

@@ -32,7 +32,7 @@ mongoose
 // CONNECT SERVER
 app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use("/api", userRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(process.env.PORT || 5050, () => {
   console.log("Server running on port 5050");

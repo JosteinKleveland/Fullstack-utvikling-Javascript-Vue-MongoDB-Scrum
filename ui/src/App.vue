@@ -1,11 +1,11 @@
-<template>
-  <NavBar />
-  <LogIn />
-</template>
-
 <script setup>
+import { RouterView } from "vue-router";
 import NavBar from "./components/NavBar.vue";
-import LogIn from "./components/SignUp.vue";
 </script>
 
-<style></style>
+<template>
+  <main>
+    <NavBar />
+    <RouterView />
+  </main>
+</template>

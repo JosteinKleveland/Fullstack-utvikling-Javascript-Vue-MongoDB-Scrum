@@ -1,26 +1,9 @@
 <template>
-  <AddTool msg="Welcome to Your Vue.js App"/>
+  <LogIn />
 </template>
 
-<script>
-import AddTool from './components/AddTool.vue'
-
-export default {
-  name: 'App',
-  components: {
-    LogIn
-  },
-  
-}
+<script setup>
+import LogIn from "./components/LogIn.vue";
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>

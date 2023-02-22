@@ -17,7 +17,8 @@ module.exports = class userAPI {
     }
     static async signIn(req, res, next) {
         try {
-            const user = await User.findOne({"email": req.body.email, "password": req.body.password});
+            const user = await User.findOne({"email": req.body.email, "password": req.body.password},
+            {"email": 0, "password": 0, "phone": 0});
             if(user == null) {
                 res.status(404).json({
                     success: false,

@@ -35,6 +35,9 @@ const toolSchema = new mongoose.Schema({
         type: String,
         minlength: [2, 'Description too short'],
         maxlength: [100, 'Description too long']
+    },
+    imgUrl: {
+        type: String,
     }
 },{timestamps: true});
 

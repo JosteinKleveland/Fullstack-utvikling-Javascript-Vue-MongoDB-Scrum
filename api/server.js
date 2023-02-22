@@ -33,7 +33,7 @@ mongoose
 // CONNECT SERVER
 app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use("/api", userRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/tool", toolRoutes);
 
 app.listen(process.env.PORT || 5050, () => {

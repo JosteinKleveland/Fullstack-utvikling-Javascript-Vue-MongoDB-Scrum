@@ -45,6 +45,8 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import router from "@/router";
+import swal from "sweetalert2";
 
 const firstName = ref("");
 const lastName = ref("");
@@ -69,7 +71,17 @@ const submitForm = () => {
 
   axios(axiosConfig)
     .then((response) => {
-      console.log("Response: ", response.data);
+      if (response.data.success) {
+        console.log("Response: ", response.data);
+        swal.fire({
+          icon: "success",
+          title: "Congratulation",
+          text: "You have successfully signed up!",
+          width: "400px",
+          heightAuto: "100px",
+        });
+        router.push({ name: "home" });
+      }
     })
     .catch((error) => {
       console.error("Error: ", error);

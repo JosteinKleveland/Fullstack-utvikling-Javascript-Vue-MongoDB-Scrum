@@ -8,9 +8,8 @@
           <v-card-text>{{ tool.description }}</v-card-text>
           <v-card-actions>
             <RouterLink :to="`/toolDetails/${tool._id}`" style="text-decoration: none">
-            <v-btn color="primary" @click="router.push(`/toolDetails/${tool._id}`) " text>Details</v-btn>
+            <v-btn color="primary" @click="router.push(`/toolDetails/${tool._id}`) " text>Detaljer</v-btn>
             </RouterLink>
-            <v-btn color="secondary" text>Add to Cart</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

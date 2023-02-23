@@ -72,7 +72,7 @@ const submitForm = () => {
   axios(axiosConfig)
     .then((response) => {
       if (response.data.success) {
-        console.log("Response: ", response.data);
+        console.log("Response: ", response.data.user._id);
         swal.fire({
           icon: "success",
           title: "Congratulation",
@@ -80,7 +80,7 @@ const submitForm = () => {
           width: "400px",
           heightAuto: "100px",
         });
-        router.push({ name: "home" });
+        router.push({ name: "homeLogin", params: {"_id":response.data.user._id }});
       }
     })
     .catch((error) => {

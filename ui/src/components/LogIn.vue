@@ -44,8 +44,8 @@ const submitForm = () => {
   axios(axiosConfig)
     .then((response) => {
       if (response.data.success) {
-        console.log("Response: ", response.data);
-        router.push({ name: "home" });
+        console.log("Response: ", response.data.user._id);
+        router.push({ name: "homeLogin", params: {"_id":response.data.user._id }});
       } else {
         Swal.fire({
           icon: "error",

@@ -8,7 +8,7 @@
           <v-card-text>{{ tool.description }}</v-card-text>
           <v-card-actions>
             <RouterLink :to="`/toolDetails/${tool._id}`" style="text-decoration: none">
-            <v-btn color="primary" @click="router.push(`/toolDetails/${tool._id}`) " text>Detaljer</v-btn>
+            <v-btn color="primary" @click="routeToDetails" text>Detaljer</v-btn>
             </RouterLink>
           </v-card-actions>
         </v-card>
@@ -38,6 +38,6 @@ export default {
   }, error => {
     console.error(error);
   });
-  }
+  },
 };
 </script>

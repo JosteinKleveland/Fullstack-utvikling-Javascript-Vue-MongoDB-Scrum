@@ -7,7 +7,9 @@
           <v-card-title>{{ tool.name }}</v-card-title>
           <v-card-text>{{ tool.description }}</v-card-text>
           <v-card-actions>
-            <v-btn color="primary" text>Details</v-btn>
+            <RouterLink :to="`/toolDetails/${tool._id}`" style="text-decoration: none">
+            <v-btn color="primary" @click="router.push(`/toolDetails/${tool._id}`) " text>Details</v-btn>
+            </RouterLink>
             <v-btn color="secondary" text>Add to Cart</v-btn>
           </v-card-actions>
         </v-card>
@@ -18,6 +20,10 @@
 
 <script>
 import axios from 'axios';
+import {useRouter} from 'vue-router';
+import {routerLink} from 'vue-router';
+const router = useRouter();
+console.log(router, routerLink);
 
 export default {
   data() {

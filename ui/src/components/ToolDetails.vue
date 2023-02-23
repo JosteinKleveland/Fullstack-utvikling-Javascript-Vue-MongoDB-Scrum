@@ -1,50 +1,47 @@
 <template>
-    <v-card v-if="tool">
-              <v-img
-                :src="tool.imgUrl"
-                height="20vh"
-                cover
-              ></v-img>
-          
-              <v-card-title>
-                {{ tool.name }}
-              </v-card-title>
-              <v-card-subtitle class="pt-1">
+  <v-card v-if="tool">
+  <v-container>
+    <v-row
+      class="mb-6"
+      no-gutters
+    >
+      <v-col cols="2">
+        <v-sheet class="pa-2 ma-2">
+          <v-img class="ml_auto" :src="tool.imgUrl" maxheight="20vh"></v-img>
+        </v-sheet>
+      </v-col>
+      <v-col
+        cols="4"
+        offset="4"
+      >
+        <v-sheet class="pa-2 ma-2">
+        <h2>{{tool.name}}</h2>
+        </v-sheet>
+        <v-sheet class=" ma-2"><p1 class="font-weight-bold">Beskrivelse:</p1></v-sheet>
+        <v-sheet class=" ma-2" >{{tool.description}}</v-sheet>
+        <v-sheet class="ma-2"><v-btn color="#ADD8E6" class="mt-4">LÅN</v-btn></v-sheet>
+      </v-col>
+      <v-sheet class="pa-2 ma-2">
+        <v-card-item>Pris: {{tool.price}}kr</v-card-item>
+      </v-sheet>
+    </v-row>
+    <v-row
+      class="mb-6"
+      no-gutters
+    >
+      <v-col
+        cols="3"
+        offset="3"
+      >
+      <v-card-text>
+      <h3>Utleier:</h3>
+      </v-card-text>
+      <v-card-subtitle class="pt-1">
                 {{tool.lenderEmail}}
               </v-card-subtitle>
-              <v-card-subtitle class="pt-4">
-                {{ tool.price }}kr
-              </v-card-subtitle>
-              <v-card-text>
-                {{ tool.description }}
-              </v-card-text>
-              <v-card-actions>
-                <v-btn
-                  color="orange-lighten-2"
-                  variant="text"
-                >Explore
-                </v-btn>
-          
-                <v-spacer></v-spacer>
-          
-                <v-btn
-                  :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                  @click="show = !show"
-                ></v-btn>
-              </v-card-actions>
-          
-              <v-expand-transition>
-                <div v-show="show">
-                  <v-divider></v-divider>
-          
-                  <v-card-text>
-                    I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-                  </v-card-text>
-                </div>
-              </v-expand-transition>
-            </v-card>
-    <v-card v-else>
-      <v-card-text>Loading...</v-card-text>
+      </v-col>
+    </v-row>
+  </v-container>
     </v-card>
   </template>
   

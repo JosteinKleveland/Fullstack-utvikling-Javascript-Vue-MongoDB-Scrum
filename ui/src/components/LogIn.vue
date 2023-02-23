@@ -10,7 +10,7 @@
       ></v-text-field>
       <v-text-field
         v-model="password"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => (v && 0 !== v.length >= 10) || 'Minimun length of 8']"
         label="Password"
         type="password"
         id="password"
@@ -23,6 +23,8 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import router from "@/router";
+import Swal from "sweetalert2";
 
 const email = ref("");
 const password = ref("");
@@ -41,10 +43,28 @@ const submitForm = () => {
 
   axios(axiosConfig)
     .then((response) => {
-      console.log("Response: ", response.data);
+      if (response.data.success) {
+        console.log("Response: ", response.data);
+        router.push({ name: "home" });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response.data.message,
+        });
+      }
     })
     .catch((error) => {
       console.error("Error: ", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "User not found",
+        width: "300px",
+        heightAuto: "70px",
+      });
     });
 };
 </script>
+
+<style scoped></style>

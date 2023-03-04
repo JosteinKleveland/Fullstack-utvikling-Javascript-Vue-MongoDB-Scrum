@@ -15,6 +15,9 @@
       <RouterLink to="/signup" style="text-decoration: none">
         <v-btn flat value="signup" color="black">Sign Up</v-btn>
       </RouterLink>
+      <RouterLink to="/regTool" style="text-decoration: none">
+        <v-btn flat value="regTool" color="black">Register Tool</v-btn>
+      </RouterLink>
     </v-toolbar>
   </div>
 </template>

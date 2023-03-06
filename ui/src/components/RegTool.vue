@@ -30,7 +30,11 @@
         type="text"
         id="descriptionField"
       ></v-text-field>
-    
+      <v-file-input
+        label="Upload picture"
+        id="imageField"
+        prepend-icon="mdi-camera"
+      ></v-file-input>
       <v-btn type="submit" block class="mt-2">Register</v-btn>
     </v-form>
   </v-sheet>
@@ -47,6 +51,7 @@ const toolField = ref("");
 const priceField = ref("");
 const categoryField = ref("");
 const descriptionField = ref("");
+const imageField = ref("");
 
 const submitForm = () => {
   const formData = {
@@ -54,6 +59,7 @@ const submitForm = () => {
     priceField: priceField.value,
     categoryField: categoryField.value,
     descriptionField: descriptionField.value,
+    imageField: imageField.value,
   };
 
   const axiosConfig = {

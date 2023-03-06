@@ -21,6 +21,7 @@
 import axios from 'axios';
 import {useRouter} from 'vue-router';
 import {routerLink} from 'vue-router';
+import {useRoute} from 'vue-router';
 const router = useRouter();
 console.log(router, routerLink);
 
@@ -34,10 +35,31 @@ export default {
     axios({ method: "GET", "url": "http://localhost:5050/api/tool/getTool/all" }).then(response => {
     console.log(response.data);
     this.tools = response.data.tools
-    console.log(this.tools.tool.name)
   }, error => {
     console.error(error);
   });
+  },
+  methods: {
+    // Gets every tool that matches the search
+    getSearch() {
+      const route = useRoute();
+      if (route.params.search.trim() == "") {
+          axios({ method: "GET", "url": "http://localhost:5050/api/tool/getTool/all" }).then(response => {
+          console.log(response.data);
+          this.tools = response.data.tools
+        }, error => {
+          console.error(error);
+        });
+      }
+      else {
+          axios({ method: "GET", "url": "http://localhost:5050/api/tool/getTool/search/"+route.params.search }).then(response => {
+          console.log(response.data);
+          this.tools = response.data.tools
+        }, error => {
+          console.error(error);
+        });
+      }
+    }
   }
 };
 </script>

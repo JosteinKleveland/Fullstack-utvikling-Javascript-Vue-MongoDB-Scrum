@@ -7,11 +7,22 @@ export const userStore = defineStore('user', {
             user: {}
         }
     },
+    getters: {
+        getLoggedIn() { 
+            return this.loggedIn;
+        },
+        getUser() {
+            return this.user;
+        }
+    },
     actions: {
         setUser(user) {
             this.user = user;
             this.loggedIn = true;
             console.log("???????????/");
+        },
+        logout() {
+
         }
     }
 });

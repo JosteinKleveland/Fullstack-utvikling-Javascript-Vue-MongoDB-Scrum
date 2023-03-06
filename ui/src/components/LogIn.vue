@@ -25,6 +25,8 @@ import { ref } from "vue";
 import axios from "axios";
 import router from "@/router";
 import Swal from "sweetalert2";
+import {userStore} from "@/stores/user";
+const user = userStore();
 
 const email = ref("");
 const password = ref("");
@@ -44,6 +46,7 @@ const submitForm = () => {
   axios(axiosConfig)
     .then((response) => {
       if (response.data.success) {
+        user.setUser(response.data.user);
         console.log("Response: ", response.data);
         router.push({ name: "home" });
       } else {

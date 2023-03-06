@@ -8,5 +8,6 @@ router.get('/getTool/all', toolApi.getToolAll);
 router.delete('/delTool/:_id', toolApi.delTool);
 router.post('/rentTool/:_id/:renterEmail', toolApi.rentTool);
 router.post('/editTool/:_id', toolApi.editTool);
+router.get('/getTool/:category', toolApi.getToolCategory);
 
 module.exports = router;

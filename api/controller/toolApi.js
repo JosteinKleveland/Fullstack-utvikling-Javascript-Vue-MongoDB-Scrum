@@ -38,6 +38,27 @@ module.exports = class toolApi {
             next(err);
         }
     }
+    static async getToolCategory(req, res, next) {
+        try {
+            const tools = await Tool.find({"category": req.params.category});
+            //
+            if(tools == null) {
+                res.status(404).json({
+                    success: false,
+                    message: "No tools under category"
+                })
+                console.log("hammer?")
+            } else {
+                res.status(201).json({
+                success: true,
+                tools
+            })
+        }
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    }
 
     static async delTool(req, res, next) {
         try {

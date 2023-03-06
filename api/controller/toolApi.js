@@ -47,7 +47,6 @@ module.exports = class toolApi {
                     success: false,
                     message: "No tools under category"
                 })
-                console.log("hammer?")
             } else {
                 res.status(201).json({
                 success: true,

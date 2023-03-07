@@ -3,7 +3,7 @@
     <v-row>
       <!-- Sort container -->
       <v-col :cols="12" :sm="3" class="d-flex justify-sm-end flex-grow-1">
-        <v-container class="test">
+        <v-container>
           <!-- Sort container content -->
           <v-row>
             <v-col>
@@ -17,6 +17,26 @@
                 hide-details
                 @click:append-inner="onClick"
               ></v-text-field>
+              <v-row class="checkbox-row">
+                <v-col>
+                  <v-checkbox label="Checkbox 1"></v-checkbox>
+                </v-col>
+              </v-row>
+              <v-row class="checkbox-row">
+                <v-col>
+                  <v-checkbox label="Checkbox 2"></v-checkbox>
+                </v-col>
+              </v-row>
+              <v-row class="checkbox-row">
+                <v-col>
+                  <v-checkbox label="Checkbox 3"></v-checkbox>
+                </v-col>
+              </v-row>
+              <v-row class="checkbox-row">
+                <v-col>
+                  <v-checkbox label="Checkbox 4"></v-checkbox>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
         </v-container>
@@ -96,4 +116,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.checkbox-row {
+  margin-bottom: -50px;
+}
+
+.checkbox-row {
+  margin-top: 15px;
+}
+</style>

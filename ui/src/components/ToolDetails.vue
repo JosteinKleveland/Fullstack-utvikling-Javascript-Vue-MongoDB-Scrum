@@ -22,7 +22,7 @@
         <v-sheet class="ma-2">
           <v-btn v-if="user.getLoggedIn" color="#ADD8E6" class="mt-4" @click="borrowTool(route.params._id, user.getUser.email)">Lån</v-btn>
           <RouterLink to="/signin" style="text-decoration: none">
-            <v-btn v-if="!user.getLoggedIn" color="#F5F5F5" class="mt-4">Lån</v-btn>
+            <v-btn v-if="!user.getLoggedIn" color="#F5F5F5" class="mt-4" @click="borrowToolLogin(route.params._id, user)">Lån</v-btn>
           </RouterLink>
         </v-sheet>
       </v-col>
@@ -109,6 +109,11 @@ export default {
         .catch((error) => {
           console.error("Error: ", error);
         });
+      },
+      borrowToolLogin(id, user) {
+        console.log(user.getRentState.rentState);
+        user.setRentState(id);
+        console.log(user.getRentState.rentState);
       }
     }
   }

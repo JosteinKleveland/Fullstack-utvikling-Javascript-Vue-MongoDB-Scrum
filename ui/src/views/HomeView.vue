@@ -67,7 +67,7 @@
                     style="text-decoration: none"
                   >
                     <v-btn
-                      color="primary"
+                      color="#FF5F00"
                       @click="router.push(`/toolDetails/${tool._id}`)"
                       text
                       >Detaljer</v-btn

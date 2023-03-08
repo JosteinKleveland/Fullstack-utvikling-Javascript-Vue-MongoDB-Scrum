@@ -1,14 +1,14 @@
 <template>
   <div>
-    <v-toolbar color="#ADD8E6">
+    <v-toolbar color="#FF5F00">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Tool Time</v-toolbar-title>
+      <RouterLink to="/" style="text-decoration: none"> 
+        <v-toolbar-title style="color: black">Tool Time</v-toolbar-title>
+      </RouterLink>
 
       <v-spacer></v-spacer>
-      <RouterLink to="/" style="text-decoration: none">
-        <v-btn id="test" flat value="home" color="black">Home</v-btn>
-      </RouterLink>
+      <v-btn @click="toggleTheme" color="black">Dark/Light Mode</v-btn>
       <RouterLink to="/signin" style="text-decoration: none">
         <v-btn v-if="!user.getLoggedIn" flat value="signin" color="black"
           >Sign In</v-btn
@@ -42,8 +42,18 @@
 </template>
 
 <script setup>
+import { useTheme } from 'vuetify'
 import { userStore } from "@/stores/user";
 const user = userStore();
+
+    const theme = useTheme()
+    
+    console.log(theme)
+
+    function toggleTheme() {
+      theme.global.name.value = theme.global.current.value.dark ? 'puLightMode' : 'puDarkMode'
+    }
+
 </script>
 
 <style scoped></style>

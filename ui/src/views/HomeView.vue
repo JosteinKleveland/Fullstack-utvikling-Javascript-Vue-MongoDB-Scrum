@@ -86,7 +86,6 @@ export default {
       (response) => {
         console.log(response.data);
         this.tools = response.data.tools;
-        console.log(this.tools.tool.name);
       },
       (error) => {
         console.error(error);

@@ -48,7 +48,7 @@ All commit messages should be structured as follows:
 ```
 
 | Type   |      Commit Message      |
-|----------|-------------|-------------------|
+|----------|-------------|
 | Feature | feat(#1): Add awesome feature |  
 | Fix | fix(#1): Fix annoying bug |  
 | Test | test: Add unit test for feature | 

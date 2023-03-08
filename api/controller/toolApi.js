@@ -3,17 +3,37 @@ const Tool = require('../model/tool')
 module.exports = class toolApi {
     static async regTool(req, res, next) {
         try {
-            const tool = await Tool.create(req.body);
-            res.status(201).json({
-                success: true, 
-                tool
-            })
+            //ChatGPT foreslo å laste opp nytt Tool-objekt ved å henvise til hver enkelt del. Se særlig "image".
+            const tool = new Tool({
+                name: req.body.name,
+                price: req.body.price,
+                category: req.body.category,
+                description: req.body.description,
+                image: req.file.buffer,
+                lenderEmail: req.body.email,
+              });
+              
+              tool.save((err, savedTool) => {
+                if (err) {
+                  console.error(err);
+                  return res.status(500).send(err);
+                }
+                res.status(200).send(savedTool);
+              });
+            
+        //Dette er den opprinnelige 
+        //     Tool.create(req.body);
+        //     res.status(201).json({
+        //         success: true, 
+        //         tool
+        //     })
 
         } catch (err) {
             console.log(err);
             next(err);
         }
     }
+    
 
     static async getToolId(req, res, next) {
         try {

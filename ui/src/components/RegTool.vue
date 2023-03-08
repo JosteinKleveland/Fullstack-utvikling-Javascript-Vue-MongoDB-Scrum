@@ -94,6 +94,10 @@ const submitForm = () => {
     method: "post",
     url: "http://localhost:5050/api/tool/regTool",
     data: formData,
+    //ChatGPT sa at når vi sender ulike typer data må vi vise til dette i headeren
+    headers: {
+      'Content-Type': 'multipart/form-data' 
+    }
   };
 
   axios(axiosConfig)

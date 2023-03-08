@@ -18,23 +18,23 @@
                 @click:append-inner="onClick"
               ></v-text-field>
               <v-row class="checkbox-row">
-                <v-col>
+                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
                   <v-checkbox label="Checkbox 1"></v-checkbox>
                 </v-col>
-              </v-row>
-              <v-row class="checkbox-row">
-                <v-col>
+                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
                   <v-checkbox label="Checkbox 2"></v-checkbox>
                 </v-col>
-              </v-row>
-              <v-row class="checkbox-row">
-                <v-col>
+                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
                   <v-checkbox label="Checkbox 3"></v-checkbox>
                 </v-col>
-              </v-row>
-              <v-row class="checkbox-row">
-                <v-col>
+                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
                   <v-checkbox label="Checkbox 4"></v-checkbox>
+                </v-col>
+                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
+                  <v-checkbox label="Checkbox 5"></v-checkbox>
+                </v-col>
+                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
+                  <v-checkbox label="Checkbox 6"></v-checkbox>
                 </v-col>
               </v-row>
             </v-col>
@@ -118,10 +118,15 @@ export default {
 
 <style scoped>
 .checkbox-row {
-  margin-bottom: -50px;
+  margin-top: 20px;
 }
 
-.checkbox-row {
-  margin-top: 15px;
+.checkbox-col {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.v-checkbox {
+  height: 50px;
 }
 </style>

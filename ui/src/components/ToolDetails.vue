@@ -19,7 +19,7 @@
         </v-sheet>
         <v-sheet class=" ma-2"><p1 class="font-weight-bold">Beskrivelse:</p1></v-sheet>
         <v-sheet class=" ma-2" >{{tool.description}}</v-sheet>
-        <v-sheet class="ma-2"><v-btn color="#ADD8E6" class="mt-4" @click="borrowTool">Lån</v-btn></v-sheet>
+        <v-sheet class="ma-2"><v-btn color="#FF5F00" class="mt-4" @click="borrowTool">Lån</v-btn></v-sheet>
       </v-col>
       <v-sheet class="pa-2 ma-2">
         <v-card-item>Pris: {{tool.price}}kr</v-card-item>

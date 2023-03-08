@@ -19,7 +19,12 @@
         </v-sheet>
         <v-sheet class=" ma-2"><p1 class="font-weight-bold">Beskrivelse:</p1></v-sheet>
         <v-sheet class=" ma-2" >{{tool.description}}</v-sheet>
-        <v-sheet class="ma-2"><v-btn color="#ADD8E6" class="mt-4" @click="borrowTool">Lån</v-btn></v-sheet>
+        <v-sheet class="ma-2">
+          <v-btn v-if="user.getLoggedIn" color="#ADD8E6" class="mt-4" @click="borrowTool(route.params._id, user.getUser.email)">Lån</v-btn>
+          <RouterLink to="/signin" style="text-decoration: none">
+            <v-btn v-if="!user.getLoggedIn" color="#F5F5F5" class="mt-4">Lån</v-btn>
+          </RouterLink>
+        </v-sheet>
       </v-col>
       <v-sheet class="pa-2 ma-2">
         <v-card-item>Pris: {{tool.price}}kr</v-card-item>
@@ -45,39 +50,67 @@
     </v-card>
   </template>
   
-  <script>
-  import axios from 'axios';
-  import {useRoute} from 'vue-router';
-  import swal from 'sweetalert';
+<script>
+import axios from 'axios';
+import {useRoute} from 'vue-router';
+import swal from 'sweetalert';
+import { userStore } from "@/stores/user";
 
 export default {
   data() {
     return {
-      tool: []
+      tool: [],
+      route: [],
+      user: [],
     };
   },
   mounted() {
+    // Retrieves the route of the page. Primarily used to retrieve the id for the tool
     const route = useRoute();
     console.log(route.params);
+    this.route = route;
+
+    // Retreieves the tool from the database
     axios({ method: "GET", "url": "http://localhost:5050/api/tool/getTool/id/"+route.params._id }).then(response => {
     console.log(response.data);
     this.tool = response.data.tool
     console.log(this.tool.name)
+
+    // Retrieves the user currently logged in
+    const user = userStore();
+    console.log(user.getUser)
+    this.user = user;
   }, error => {
     console.error(error); 
   })
 
   },
     methods: {
-    borrowTool() {
-      swal({
-        title: "Låneforespørsel sendt!",
-        text: "Du vil motta en e-post med informasjon om hvordan du kan hente verktøyet.",
-        icon: "success",
-      }).then(() => {
-        this.$router.push('/');
-      });
+    borrowTool(id, email) {
+      const axiosConfig = {
+        method: "post",
+        // TODO: Once the method of retriving userdata is available, add the users email to the url below
+        url: "http://localhost:5050/api/tool/rentTool/" + id + "/" + email,
+      };
+
+      axios(axiosConfig)
+        .then((response) => {
+          if (response.data.success) {
+            console.log("Response: ", response.data);
+            swal({
+              title: "Låneforespørsel sendt!",
+              text: "Du vil motta en e-post med informasjon om hvordan du kan hente verktøyet.",
+              icon: "success",
+            }).then(() => {
+              this.$router.push('/');
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+      }
     }
   }
-};
-  </script>
+
+</script>

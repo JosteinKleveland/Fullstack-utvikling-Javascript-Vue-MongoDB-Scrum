@@ -4,13 +4,13 @@ module.exports = class toolApi {
     static async regTool(req, res, next) {
         try {
             //ChatGPT foreslo å laste opp nytt Tool-objekt ved å henvise til hver enkelt del. Se særlig "image".
-            const tool = new Tool({
+            /*const tool = await new Tool({
                 name: req.body.name,
                 price: req.body.price,
                 category: req.body.category,
                 description: req.body.description,
-                image: req.file.buffer,
-                lenderEmail: req.body.email,
+                image: req.body.image,
+                lenderEmail: "test@mail.com",
               });
               
               tool.save((err, savedTool) => {
@@ -19,14 +19,13 @@ module.exports = class toolApi {
                   return res.status(500).send(err);
                 }
                 res.status(200).send(savedTool);
-              });
+              });*/
             
-        //Dette er den opprinnelige 
-        //     Tool.create(req.body);
-        //     res.status(201).json({
-        //         success: true, 
-        //         tool
-        //     })
+            const tool = await Tool.create(req.body);
+             res.status(201).json({
+                 success: true, 
+                 tool
+             });
 
         } catch (err) {
             console.log(err);

@@ -31,9 +31,11 @@
         id="descriptionField"
       ></v-text-field>
       <v-file-input
+        max-size="50"
         label="Upload picture"
-        id="imageField"
         prepend-icon="mdi-camera"
+        id="imageField"
+        @change="testChange"
       ></v-file-input>
       <v-btn type="submit" block class="mt-2">Register</v-btn>
     </v-form>
@@ -56,6 +58,7 @@ const priceField = ref("");
 const categoryField = ref("");
 const descriptionField = ref("");
 const imageField = ref("");
+//const selectedFile = ref("");
 
 // const imageAsString = fs.readFile(imageField.value);
 // const binaryData = Buffer.from(imageAsString);
@@ -74,30 +77,31 @@ const imageField = ref("");
 //         reader.onerror = () => reject(new Error('Error reading file.'));
 //         reader.readAsBinaryString(new Blob([imageField.value]));
 //       });
-
+const testChange = () => {
+  console.log(imageField.value.name);
+}
 const submitForm = () => {
   const formData = {
     name: toolField.value,
     price: priceField.value,
     category: categoryField.value,
     description: descriptionField.value,
-    image: imageField.value,
+    image: document.getElementById("imageField").value,
     lenderEmail: user.getUser.email,
 
   };
-  console.log(imageField.value);
   console.log(formData);
-  console.log(user.getUser.email);
+  console.log(document.getElementById("imageField").value.name);
 
-
+  console.log(formData.image.buffer);
   const axiosConfig = {
     method: "post",
     url: "http://localhost:5050/api/tool/regTool",
     data: formData,
     //ChatGPT sa at når vi sender ulike typer data må vi vise til dette i headeren
-    headers: {
+    /*headers: {
       'Content-Type': 'multipart/form-data' 
-    }
+    }*/
   };
 
   axios(axiosConfig)

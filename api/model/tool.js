@@ -37,7 +37,7 @@ const toolSchema = new mongoose.Schema({
         maxlength: [100, 'Description too long']
     },
     image: {
-        type: Buffer,
+        type: String,
     },
     imgUrl: {
         type: String,

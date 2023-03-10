@@ -35,11 +35,11 @@
         label="Upload picture"
         prepend-icon="mdi-camera"
         id="imageField"
-        @change="testChange"
       ></v-file-input>
       <v-btn type="submit" block class="mt-2">Register</v-btn>
     </v-form>
   </v-sheet>
+  <img :src="buffer">
 </template>
 
 
@@ -51,13 +51,11 @@ import swal from "sweetalert2";
 import { userStore } from "@/stores/user";
 
 
-
 const user = userStore();
 const toolField = ref("");
 const priceField = ref("");
 const categoryField = ref("");
 const descriptionField = ref("");
-const imageField = ref("");
 //const selectedFile = ref("");
 
 // const imageAsString = fs.readFile(imageField.value);
@@ -77,23 +75,23 @@ const imageField = ref("");
 //         reader.onerror = () => reject(new Error('Error reading file.'));
 //         reader.readAsBinaryString(new Blob([imageField.value]));
 //       });
-const testChange = () => {
-  console.log(imageField.value.name);
-}
 const submitForm = () => {
-  const formData = {
+  const reader = new FileReader();
+  let imageUrl;
+  // Set up onload callback to handle file contents
+  reader.onload = function(event) {
+    imageUrl = event.target.result;
+    const formData = {
     name: toolField.value,
     price: priceField.value,
     category: categoryField.value,
     description: descriptionField.value,
-    image: document.getElementById("imageField").value,
+    image: imageUrl,
     lenderEmail: user.getUser.email,
 
   };
   console.log(formData);
-  console.log(document.getElementById("imageField").value.name);
-
-  console.log(formData.image.buffer);
+  console.log(document.getElementById("imageField").files[0].name);
   const axiosConfig = {
     method: "post",
     url: "http://localhost:5050/api/tool/regTool",
@@ -121,6 +119,10 @@ const submitForm = () => {
     .catch((error) => {
       console.error("Error: ", error);
     });
+  };
+
+  // Read file as ArrayBuffer (which can be converted to a Buffer object if needed)
+  reader.readAsDataURL(document.getElementById("imageField").files[0]);
 };
 </script>
 

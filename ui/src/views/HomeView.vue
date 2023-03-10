@@ -38,7 +38,7 @@
               xl="4"
             >
               <v-card>
-                <v-img :src="imageData" height="200"></v-img>
+                <v-img :src="tool.image" height="200"></v-img>
                 <v-card-title>{{ tool.name }}</v-card-title>
                 <v-card-text>{{ tool.description }}</v-card-text>
                 <v-card-actions>
@@ -75,8 +75,6 @@ export default {
   data() {
     return {
       tools: [],
-      imageBinaryData: null,
-      imageData: ''
     };
   },
 
@@ -88,9 +86,6 @@ export default {
       (response) => {
         console.log(response.data);
         this.tools = response.data.tools;
-        this.imageBinaryData = response.data.tools[1].image.data;
-        this.imageData = 'data:image/jpg;base64,' + btoa(this.imageBinaryData);
-        console.log(this.imageData);
       },
       (error) => {
         console.error(error);

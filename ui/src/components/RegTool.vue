@@ -56,25 +56,7 @@ const toolField = ref("");
 const priceField = ref("");
 const categoryField = ref("");
 const descriptionField = ref("");
-//const selectedFile = ref("");
 
-// const imageAsString = fs.readFile(imageField.value);
-// const binaryData = Buffer.from(imageAsString);
-
-// const reader = new FileReader();
-// reader.readAsArrayBuffer(imageField.value);
-// const binaryData = reader.onload = () => {
-//   return reader.result;
-// };
-
-
-
-// const bufferedData = new Promise((resolve, reject) => {
-//         const reader = new FileReader();
-//         reader.onload = () => resolve(reader.result);
-//         reader.onerror = () => reject(new Error('Error reading file.'));
-//         reader.readAsBinaryString(new Blob([imageField.value]));
-//       });
 const submitForm = () => {
   const reader = new FileReader();
   let imageUrl;
@@ -96,10 +78,6 @@ const submitForm = () => {
     method: "post",
     url: "http://localhost:5050/api/tool/regTool",
     data: formData,
-    //ChatGPT sa at når vi sender ulike typer data må vi vise til dette i headeren
-    /*headers: {
-      'Content-Type': 'multipart/form-data' 
-    }*/
   };
 
   axios(axiosConfig)

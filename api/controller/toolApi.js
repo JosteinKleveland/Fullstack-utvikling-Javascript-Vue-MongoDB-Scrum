@@ -40,6 +40,17 @@ module.exports = class toolApi {
             next(err);
         }
     }
+    static async getToolAvailable(req, res, next) {
+        try {
+            const tools = await Tool.find({renterEmail:null});
+            res.status(200).json({
+                tools
+            });
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    }
 
     static async getToolFiltered(req, res, next) {
         try {
@@ -70,11 +81,6 @@ module.exports = class toolApi {
                     break;
                 case "lesser":
                     tools = await Tool.find({[attr]: { $lt :  value1}});
-                    res.status(200).json({
-                        tools
-                    });
-                case "empty":
-                    tools = await Tool.find({[attr]: null});
                     res.status(200).json({
                         tools
                     });

@@ -1,8 +1,6 @@
 <template>
   <div>
     <v-toolbar color="#ADD8E6">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
       <v-toolbar-title>Tool Time</v-toolbar-title>
 
       <v-spacer></v-spacer>

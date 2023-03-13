@@ -4,7 +4,6 @@
       <!-- Sort container -->
       <v-col :cols="12" :sm="3" class="d-flex justify-sm-end flex-grow-1">
         <v-container>
-          <!-- Sort container content -->
           <v-row>
             <v-col>
               <v-text-field
@@ -39,13 +38,52 @@
               </v-row>
             </v-col>
           </v-row>
+
+          <!-- Sort price high-low, low-high -->
+          <v-row>
+            <v-col>
+              <v-select
+                class="priceSort"
+                clearable
+                label="Sort By Price"
+                :items="['High-Low', 'Low-High']"
+                variant="solo"
+              ></v-select>
+            </v-col>
+          </v-row>
+
+          <!-- Price sort by input -->
+          <v-row>
+            <v-col cols="6" sm="6" class="sortInput">
+              <v-text-field
+                label="From Kr"
+                v-model="positiveNumber"
+                type="number"
+                :rules="positiveNumberRules"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6" sm="6" class="sortInput">
+              <v-text-field
+                label="To Kr"
+                v-model="anyNumber"
+                type="number"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-btn color="primary" @click="sortNumbers" class="sortButton"
+                >Sort</v-btn
+              >
+            </v-col>
+          </v-row>
         </v-container>
       </v-col>
       <v-divider vertical></v-divider>
+
       <!-- Tool container -->
       <v-col :cols="12" :sm="9" class="flex-grow-1">
         <v-container>
-          <!-- Tool container content -->
           <v-row>
             <v-col
               v-for="tool in tools"
@@ -86,16 +124,28 @@
 <script>
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { routerLink } from "vue-router";
+import { RouterLink } from "vue-router";
 const router = useRouter();
 
-console.log(router, routerLink);
+console.log(router, RouterLink);
 export default {
   name: "HomeView",
   data() {
     return {
       tools: [],
+      positiveNumber: 0,
+      anyNumber: 0,
+      positiveNumberRules: [
+        (v) => !!v || "Positive number is required",
+        (v) => v >= 0 || "Positive number cannot be negative",
+      ],
     };
+  },
+  methods: {
+    sortNumbers() {
+      // Add your sorting logic here
+      console.log("Sorting numbers");
+    },
   },
 
   mounted() {
@@ -128,5 +178,18 @@ export default {
 
 .v-checkbox {
   height: 50px;
+}
+
+.priceSort {
+  margin-top: 20px;
+}
+
+.sortInput {
+  margin-top: 5px !important;
+  padding: 5px;
+  height: 70px;
+}
+
+.sortButton {
 }
 </style>

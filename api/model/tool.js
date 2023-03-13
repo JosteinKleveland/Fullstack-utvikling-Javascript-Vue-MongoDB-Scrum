@@ -39,9 +39,7 @@ const toolSchema = new mongoose.Schema({
     image: {
         type: String,
     },
-    imgUrl: {
-        type: String,
-    }
+
 
 },{timestamps: true});
 

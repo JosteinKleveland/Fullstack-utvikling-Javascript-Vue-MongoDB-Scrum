@@ -5,6 +5,10 @@ export const userStore = defineStore("user", {
     return {
       loggedIn: false,
       user: {},
+      toolState: {
+        rentState: false,
+        id: null
+      }
     };
   },
   getters: {
@@ -14,15 +18,25 @@ export const userStore = defineStore("user", {
     getUser() {
       return this.user;
     },
+    getRentState() {
+      return this.toolState;
+    }
   },
   actions: {
     setUser(user) {
       this.user = user;
       this.loggedIn = true;
-      console.log("???????????/");
     },
     logout() {
       this.loggedIn = false;
     },
+    setRentState(id){
+        this.toolState.rentState = true;
+        this.toolState.id = id;
+    },
+    resetRentState(){
+        this.toolState.rentState = false;
+        this.toolState.id = null;
+    }
   },
 });

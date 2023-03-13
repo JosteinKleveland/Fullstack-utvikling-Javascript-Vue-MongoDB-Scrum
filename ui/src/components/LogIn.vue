@@ -48,7 +48,13 @@ const submitForm = () => {
       if (response.data.success) {
         user.setUser(response.data.user);
         console.log("Response: ", response.data);
-        router.push({ name: "home" });
+        //console.log(user.getRentState.rentState);
+        if(user.getRentState.rentState) {
+          router.push('/toolDetails/'+user.getRentState.id);
+        }
+        else {
+          router.push({ name: "home" }); 
+        }
       } else {
         Swal.fire({
           icon: "error",

@@ -58,6 +58,55 @@ module.exports = class toolApi {
         }
     }
 
+    static async getToolFiltered(req, res, next) {
+        try {
+            let tools;
+            const mode = req.params.mode;
+            const attr = req.params.attr;
+            const value1 = req.params.value1;
+            const value2 = req.params.value2;
+            switch (mode) {
+                // Parameter matches single value
+                case "match":
+                    tools = await Tool.find({[attr]: value1});
+                    res.status(200).json({
+                        tools
+                    });
+                    break;
+                case "between":
+                    tools = await Tool.find({[attr]: { $gt :  value1, $lt : value2}});
+                    res.status(200).json({
+                        tools
+                    });
+                    break;
+                case "greater":
+                    tools = await Tool.find({[attr]: { $gt :  value1}});
+                    res.status(200).json({
+                        tools
+                    });
+                    break;
+                case "lesser":
+                    tools = await Tool.find({[attr]: { $lt :  value1}});
+                    res.status(200).json({
+                        tools
+                    });
+                case "empty":
+                    tools = await Tool.find({[attr]: null});
+                    res.status(200).json({
+                        tools
+                    });
+                default:
+                    res.status(404).json({
+                        "success": false,
+                        "message": "No matching objects"
+                    });
+                    break;
+            }
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    }
     static async delTool(req, res, next) {
         try {
             // Tests that the tool exists within the database before deletion. If not, throws an error

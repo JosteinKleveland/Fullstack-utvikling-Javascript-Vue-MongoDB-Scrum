@@ -11,7 +11,8 @@
       ></v-text-field>
       <v-text-field
         v-model="password"
-        :rules="[(v) => (v && 7 < v.length) || 'Minimun length of 8']"
+        :rules="[(v) => (v && 7 < v.length) || 'Password must be at least 8 characters',
+                 (v) => (v && 33 > v.length) || 'Password must be shorter than 33 characters']"
         label="Password"
         type="password"
         id="password"

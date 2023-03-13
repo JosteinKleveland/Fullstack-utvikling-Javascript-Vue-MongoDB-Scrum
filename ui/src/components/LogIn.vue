@@ -3,14 +3,16 @@
     <v-form @submit.prevent="submitForm">
       <v-text-field
         v-model="email"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => !!v || 'You must enter an email',
+                 (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email must be valid']"
         label="Email"
         type="email"
         id="email"
       ></v-text-field>
       <v-text-field
         v-model="password"
-        :rules="[(v) => (v && 0 !== v.length >= 10) || 'Minimun length of 8']"
+        :rules="[(v) => (v && 7 < v.length) || 'Password must be at least 8 characters',
+                 (v) => (v && 33 > v.length) || 'Password must be shorter than 33 characters']"
         label="Password"
         type="password"
         id="password"

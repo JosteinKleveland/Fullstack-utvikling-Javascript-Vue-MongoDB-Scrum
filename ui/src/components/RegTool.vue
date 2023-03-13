@@ -3,7 +3,9 @@
     <v-form @submit.prevent="submitForm">
       <v-text-field
         v-model="toolField"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => !!v || 'Field is required',
+                 (v) => (v && v.length > 1) || 'Name must be at least 2 characters',
+                 (v) => (v && v.length < 33) || 'Name must be less than 33 characters']"
         label="Tool Name"
         type="text"
         id="toolField"
@@ -18,14 +20,18 @@
       ></v-text-field>
       <v-text-field
         v-model="categoryField"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => !!v || 'Field is required',
+                 (v) => (v && v.length > 1) || 'Category must be at least 2 characters',
+                 (v) => (v && v.length < 33) || 'Category must be less than 33 characters']"
         label="Category"
         type="text"
         id="categoryField"
       ></v-text-field>
       <v-text-field
         v-model="descriptionField"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => !!v || 'Field is required',
+                 (v) => (v && v.length > 1) || 'Description must be at least 2 characters',
+                 (v) => (v && v.length < 101) || 'Description must be less than 33 characters']"
         label="Description"
         type="text"
         id="descriptionField"

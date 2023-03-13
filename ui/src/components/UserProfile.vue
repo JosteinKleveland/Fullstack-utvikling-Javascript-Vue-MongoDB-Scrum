@@ -64,7 +64,7 @@
                 xl="4"
               >
                 <v-card>
-                  <v-img :src="tool.imgUrl" height="200"></v-img>
+                  <v-img :src="tool.image" height="200"></v-img>
                   <v-card-title>{{ tool.name }}</v-card-title>
                   <v-card-text>{{ tool.description }}</v-card-text>
                   <v-card-actions>

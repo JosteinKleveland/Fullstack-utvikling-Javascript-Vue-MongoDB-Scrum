@@ -4,6 +4,7 @@ import LogIn from "../views/LoginView.vue";
 import SignUp from "../views/SignupView.vue";
 import ToolDetails from "../views/DisplayView.vue";
 import RegTool from "../views/RegToolView.vue";
+import UserProfile from "../views/ProfileView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -27,13 +28,18 @@ const router = createRouter({
     {
       path: "/toolDetails/:_id",
       name: "toolDetails",
-      component: ToolDetails
+      component: ToolDetails,
     },
     {
       path: "/regTool",
       name: "regTool",
       component: RegTool,
-    }
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: UserProfile,
+    },
   ],
 });
 

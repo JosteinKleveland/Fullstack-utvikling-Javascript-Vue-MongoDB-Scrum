@@ -3,17 +3,19 @@ const Tool = require('../model/tool')
 module.exports = class toolApi {
     static async regTool(req, res, next) {
         try {
+            
             const tool = await Tool.create(req.body);
-            res.status(201).json({
-                success: true, 
-                tool
-            })
+             res.status(201).json({
+                 success: true, 
+                 tool
+             });
 
         } catch (err) {
             console.log(err);
             next(err);
         }
     }
+    
 
     static async getToolId(req, res, next) {
         try {

@@ -3,7 +3,9 @@
     <v-form @submit.prevent="submitForm">
       <v-text-field
         v-model="toolField"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => !!v || 'Field is required',
+                 (v) => (v && v.length > 1) || 'Name must be at least 2 characters',
+                 (v) => (v && v.length < 33) || 'Name must be less than 33 characters']"
         label="Tool Name"
         type="text"
         id="toolField"
@@ -18,26 +20,32 @@
       ></v-text-field>
       <v-text-field
         v-model="categoryField"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => !!v || 'Field is required',
+                 (v) => (v && v.length > 1) || 'Category must be at least 2 characters',
+                 (v) => (v && v.length < 33) || 'Category must be less than 33 characters']"
         label="Category"
         type="text"
         id="categoryField"
       ></v-text-field>
       <v-text-field
         v-model="descriptionField"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[(v) => !!v || 'Field is required',
+                 (v) => (v && v.length > 1) || 'Description must be at least 2 characters',
+                 (v) => (v && v.length < 101) || 'Description must be less than 33 characters']"
         label="Description"
         type="text"
         id="descriptionField"
       ></v-text-field>
       <v-file-input
+        max-size="50"
         label="Upload picture"
-        id="imageField"
         prepend-icon="mdi-camera"
+        id="imageField"
       ></v-file-input>
       <v-btn type="submit" block class="mt-2">Register</v-btn>
     </v-form>
   </v-sheet>
+  <img :src="buffer">
 </template>
 
 
@@ -46,25 +54,35 @@ import { ref } from "vue";
 import axios from "axios";
 import router from "@/router";
 import swal from "sweetalert2";
+import { userStore } from "@/stores/user";
 
+
+const user = userStore();
 const toolField = ref("");
 const priceField = ref("");
 const categoryField = ref("");
 const descriptionField = ref("");
-const imageField = ref("");
 
 const submitForm = () => {
-  const formData = {
-    toolField: toolField.value,
-    priceField: priceField.value,
-    categoryField: categoryField.value,
-    descriptionField: descriptionField.value,
-    imageField: imageField.value,
-  };
+  const reader = new FileReader();
+  let imageUrl;
+  // Set up onload callback to handle file contents
+  reader.onload = function(event) {
+    imageUrl = event.target.result;
+    const formData = {
+    name: toolField.value,
+    price: priceField.value,
+    category: categoryField.value,
+    description: descriptionField.value,
+    image: imageUrl,
+    lenderEmail: user.getUser.email,
 
+  };
+  console.log(formData);
+  console.log(document.getElementById("imageField").files[0].name);
   const axiosConfig = {
     method: "post",
-    url: "http://localhost:5050/api/user/regTool",
+    url: "http://localhost:5050/api/tool/regTool",
     data: formData,
   };
 
@@ -85,6 +103,10 @@ const submitForm = () => {
     .catch((error) => {
       console.error("Error: ", error);
     });
+  };
+
+  // Read file as ArrayBuffer (which can be converted to a Buffer object if needed)
+  reader.readAsDataURL(document.getElementById("imageField").files[0]);
 };
 </script>
 

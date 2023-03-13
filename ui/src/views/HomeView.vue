@@ -96,7 +96,7 @@
               xl="4"
             >
               <v-card>
-                <v-img :src="tool.imgUrl" height="200"></v-img>
+                <v-img :src="tool.image" height="200"></v-img>
                 <v-card-title>{{ tool.name }}</v-card-title>
                 <v-card-text>{{ tool.description }}</v-card-text>
                 <v-card-actions>
@@ -156,7 +156,6 @@ export default {
       (response) => {
         console.log(response.data);
         this.tools = response.data.tools;
-        console.log(this.tools.tool.name);
       },
       (error) => {
         console.error(error);

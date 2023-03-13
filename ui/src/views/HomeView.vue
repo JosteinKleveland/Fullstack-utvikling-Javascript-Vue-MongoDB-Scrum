@@ -151,14 +151,14 @@ export default {
   mounted() {
     axios({
       method: "GET",
-      url: "http://localhost:5050/api/tool/getTool/all",
+      url: "http://localhost:5050/api/tool/getTool/available",
     }).then(
       (response) => {
         console.log(response.data);
         this.tools = response.data.tools;
       },
       (error) => {
-        console.error(error);
+        console.error(error.message);
       }
     );
   },

@@ -13,7 +13,30 @@ import * as directives from "vuetify/directives";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
 
+const puDarkMode = {
+  dark: true,
+  colors: {
+    background: '#000000',
+    surface: '#212121',
+    error: '#FF5F00',
+  }
+}
+
+const puLightMode = {
+  dark: false,
+  colors: {
+    error: '#FF5F00',
+  }
+}
+
 const vuetify = createVuetify({
+  theme: {
+    defaultTheme: "puLightMode",
+    themes: {
+      puDarkMode,
+      puLightMode
+    }
+  },
   components,
   directives,
   icons: {

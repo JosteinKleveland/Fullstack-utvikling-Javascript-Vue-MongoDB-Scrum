@@ -20,7 +20,7 @@
         <v-sheet class=" ma-2"><p1 class="font-weight-bold">Beskrivelse:</p1></v-sheet>
         <v-sheet class=" ma-2" >{{tool.description}}</v-sheet>
         <v-sheet v-if='tool.renterEmail == "" ' class="ma-2">
-          <v-btn v-if="user.getLoggedIn" color="#ADD8E6" class="mt-4" @click="borrowTool(route.params._id, user.getUser.email)">Lån</v-btn>
+          <v-btn v-if="user.getLoggedIn" color="#ADD8E6" class="mt-4" @click="borrowTool(route.params._id, user.getUser.email)">Lån</v-btn> //#FF5F00
           <RouterLink to="/signin" style="text-decoration: none">
             <v-btn v-if="!user.getLoggedIn" color="#F5F5F5" class="mt-4" @click="borrowToolLogin(route.params._id, user)">Lån</v-btn>
           </RouterLink>

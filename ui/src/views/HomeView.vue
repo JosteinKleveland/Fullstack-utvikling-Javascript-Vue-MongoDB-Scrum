@@ -18,22 +18,15 @@
               ></v-text-field>
               <v-row class="checkbox-row">
                 <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 1"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 2"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 3"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 4"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 5"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 6"></v-checkbox>
+                  <v-radio-group v-model="selectedCategory">
+                    <v-radio
+                      v-for="(category, index) in categories"
+                      :key="index"
+                      :label="category.name"
+                      :value="category.name"
+                      @click="deselectRadio"
+                    ></v-radio>
+                  </v-radio-group>
                 </v-col>
               </v-row>
             </v-col>
@@ -133,34 +126,98 @@ export default {
   data() {
     return {
       tools: [],
+      selectedCategory: "",
       positiveNumber: 0,
       anyNumber: 0,
       positiveNumberRules: [
         (v) => !!v || "Positive number is required",
         (v) => v >= 0 || "Positive number cannot be negative",
       ],
+      categories: [
+        { name: "Hagearbeid", id: 1 },
+        { name: "Kjøkkenredskaper", id: 2 },
+        { name: "Rengjøring", id: 3 },
+        { name: "Baderom", id: 4 },
+        { name: "Garasjen", id: 5 },
+        { name: "Bil", id: 6 },
+      ],
     };
+  },
+  computed: {
+    filteredTools() {
+      return this.tools.filter(
+        (tool) => tool.category === this.selectedCategory
+      );
+    },
   },
   methods: {
     sortNumbers() {
       // Add your sorting logic here
       console.log("Sorting numbers");
     },
+
+    fetchTools() {
+      // Get the selected category name
+      const selectedCategory = this.categories.find(
+        (c) => c.id === this.selectedCategory
+      )?.name;
+      // Call the API endpoint to fetch the tools with the selected category name
+      axios
+        .get(
+          `http://localhost:5050/api/tool/getTool/filter/category/match/${selectedCategory}`
+        )
+        .then((response) => {
+          console.log(response.data);
+          this.tools = response.data.tools;
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    },
+
+    fetchAllTools() {
+      axios({
+        method: "GET",
+        url: "http://localhost:5050/api/tool/getTool/available",
+      }).then(
+        (response) => {
+          console.log(response.data);
+          this.tools = response.data.tools;
+        },
+        (error) => {
+          console.error(error.message);
+        }
+      );
+    },
+
+    deselectRadio() {
+      if (this.selectedCategory) {
+        this.selectedCategory = "";
+        this.fetchAllTools();
+      }
+    },
   },
 
   mounted() {
-    axios({
-      method: "GET",
-      url: "http://localhost:5050/api/tool/getTool/available",
-    }).then(
-      (response) => {
-        console.log(response.data);
-        this.tools = response.data.tools;
-      },
-      (error) => {
-        console.error(error.message);
-      }
-    );
+    this.fetchTools();
+    this.fetchAllTools();
+  },
+
+  watch: {
+    selectedCategory(newVal) {
+      axios({
+        method: "GET",
+        url: `http://localhost:5050/api/tool/getTool/filter/category/match/${newVal}`,
+      }).then(
+        (response) => {
+          console.log(response.data);
+          this.tools = response.data.tools;
+        },
+        (error) => {
+          console.error(error.message);
+        }
+      );
+    },
   },
 };
 </script>
@@ -187,8 +244,5 @@ export default {
   margin-top: 5px !important;
   padding: 5px;
   height: 70px;
-}
-
-.sortButton {
 }
 </style>

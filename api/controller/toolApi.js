@@ -84,6 +84,22 @@ module.exports = class toolApi {
                     res.status(200).json({
                         tools
                     });
+                    break;
+                     // Sorting by price (low to high)
+                case "priceLowToHigh":
+                    tools = await Tool.find({renterEmail: null}).sort({price: 1});
+                    res.status(200).json({
+                        tools
+                    });
+                    break;
+                     // Sorting by price (high to low)
+                case "priceHighToLow":
+                    tools = await Tool.find({renterEmail: null}).sort({price: -1});
+                    
+                    res.status(200).json({
+                        tools
+                    });
+                    break;
                 default:
                     res.status(404).json({
                         "success": false,

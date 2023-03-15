@@ -7,6 +7,7 @@
           <v-row>
             <v-col>
               <v-text-field
+                v-model="searchField"
                 class="search-bar flex-grow-1"
                 density="compact"
                 variant="solo"
@@ -14,7 +15,7 @@
                 append-inner-icon="mdi-magnify"
                 single-line
                 hide-details
-                @click:append-inner="onClick"
+                @input="getSearch()"
               ></v-text-field>
               <v-row class="checkbox-row">
                 <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
@@ -48,10 +49,11 @@
                 label="Sort By Price"
                 :items="['High-Low', 'Low-High']"
                 variant="solo"
+                v-model="selectedSortOption"
+                @update:model-value="getSortedTools"
               ></v-select>
             </v-col>
           </v-row>
-
           <!-- Price sort by input -->
           <v-row>
             <v-col cols="6" sm="6" class="sortInput">
@@ -133,12 +135,15 @@ export default {
   data() {
     return {
       tools: [],
+      tempTools: [],
       positiveNumber: 0,
       anyNumber: 0,
+      selectedSortOption: null,
       positiveNumberRules: [
         (v) => !!v || "Positive number is required",
         (v) => v >= 0 || "Positive number cannot be negative",
       ],
+      searchField: '',
     };
   },
   methods: {
@@ -146,6 +151,54 @@ export default {
       // Add your sorting logic here
       console.log("Sorting numbers");
     },
+    getSearch() {
+      if(this.searchField == ''){
+          axios({
+          method: "GET",
+          url: "http://localhost:5050/api/tool/getTool/available",
+        }).then(
+          (response) => {
+            this.tools = response.data.tools;
+            this.tempTools = response.data.tools;
+          },
+          (error) => {
+            console.error(error.message);
+          },);
+      }
+      else{
+          axios({
+          method: "GET",
+          url: "http://localhost:5050/api/tool/getTool/search/"+this.searchField,
+        }).then(
+          (response) => {
+            this.tools = response.data.tools;
+            this.tempTools = response.data.tools;
+          },
+          (error) => {
+            console.error(error.message);
+          },);
+      }
+    },
+
+    getSortedTools() {
+
+
+      if (this.selectedSortOption == 'Low-High') {
+        // Sort the tools by price from low to high
+        axios.get(`http://localhost:5050/api/tool/getTool/filter/price/priceLowToHigh`).then(response => {
+          this.tools = response.data.tools;
+        }).catch(error => {
+          console.error(error);
+        });
+      } else if (this.selectedSortOption == 'High-Low') {
+        // Sort the tools by price from high to low
+        axios.get(`http://localhost:5050/api/tool/getTool/filter/price/priceHighToLow`).then(response => {
+          this.tools = response.data.tools;
+        }).catch(error => {
+          console.error(error);
+        });
+      }
+    }
   },
 
   mounted() {
@@ -156,10 +209,11 @@ export default {
       (response) => {
         console.log(response.data);
         this.tools = response.data.tools;
+        this.tempTools = response.data.tools;
       },
       (error) => {
         console.error(error.message);
-      }
+      },
     );
   },
 };
@@ -190,5 +244,6 @@ export default {
 }
 
 .sortButton {
+
 }
 </style>

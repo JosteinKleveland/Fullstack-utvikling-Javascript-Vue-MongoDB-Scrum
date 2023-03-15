@@ -48,10 +48,11 @@
                 label="Sort By Price"
                 :items="['High-Low', 'Low-High']"
                 variant="solo"
+                v-model="selectedSortOption"
+                @update:model-value="getSortedTools"
               ></v-select>
             </v-col>
           </v-row>
-
           <!-- Price sort by input -->
           <v-row>
             <v-col cols="6" sm="6" class="sortInput">
@@ -135,6 +136,7 @@ export default {
       tools: [],
       positiveNumber: 0,
       anyNumber: 0,
+      selectedSortOption: null,
       positiveNumberRules: [
         (v) => !!v || "Positive number is required",
         (v) => v >= 0 || "Positive number cannot be negative",
@@ -146,6 +148,26 @@ export default {
       // Add your sorting logic here
       console.log("Sorting numbers");
     },
+
+    getSortedTools() {
+
+
+      if (this.selectedSortOption == 'Low-High') {
+        // Sort the tools by price from low to high
+        axios.get(`http://localhost:5050/api/tool/getTool/filter/price/priceLowToHigh`).then(response => {
+          this.tools = response.data.tools;
+        }).catch(error => {
+          console.error(error);
+        });
+      } else if (this.selectedSortOption == 'High-Low') {
+        // Sort the tools by price from high to low
+        axios.get(`http://localhost:5050/api/tool/getTool/filter/price/priceHighToLow`).then(response => {
+          this.tools = response.data.tools;
+        }).catch(error => {
+          console.error(error);
+        });
+      }
+    }
   },
 
   mounted() {
@@ -190,5 +212,6 @@ export default {
 }
 
 .sortButton {
+
 }
 </style>

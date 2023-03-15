@@ -7,6 +7,7 @@
           <v-row>
             <v-col>
               <v-text-field
+                v-model="searchField"
                 class="search-bar flex-grow-1"
                 density="compact"
                 variant="solo"
@@ -14,7 +15,7 @@
                 append-inner-icon="mdi-magnify"
                 single-line
                 hide-details
-                @click:append-inner="onClick"
+                @input="getSearch()"
               ></v-text-field>
               <v-row class="checkbox-row">
                 <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
@@ -134,6 +135,7 @@ export default {
   data() {
     return {
       tools: [],
+      tempTools: [],
       positiveNumber: 0,
       anyNumber: 0,
       selectedSortOption: null,
@@ -141,12 +143,41 @@ export default {
         (v) => !!v || "Positive number is required",
         (v) => v >= 0 || "Positive number cannot be negative",
       ],
+      searchField: '',
     };
   },
   methods: {
     sortNumbers() {
       // Add your sorting logic here
       console.log("Sorting numbers");
+    },
+    getSearch() {
+      if(this.searchField == ''){
+          axios({
+          method: "GET",
+          url: "http://localhost:5050/api/tool/getTool/available",
+        }).then(
+          (response) => {
+            this.tools = response.data.tools;
+            this.tempTools = response.data.tools;
+          },
+          (error) => {
+            console.error(error.message);
+          },);
+      }
+      else{
+          axios({
+          method: "GET",
+          url: "http://localhost:5050/api/tool/getTool/search/"+this.searchField,
+        }).then(
+          (response) => {
+            this.tools = response.data.tools;
+            this.tempTools = response.data.tools;
+          },
+          (error) => {
+            console.error(error.message);
+          },);
+      }
     },
 
     getSortedTools() {
@@ -178,10 +209,11 @@ export default {
       (response) => {
         console.log(response.data);
         this.tools = response.data.tools;
+        this.tempTools = response.data.tools;
       },
       (error) => {
         console.error(error.message);
-      }
+      },
     );
   },
 };

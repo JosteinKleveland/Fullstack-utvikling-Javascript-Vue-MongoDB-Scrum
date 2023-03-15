@@ -51,6 +51,27 @@ module.exports = class toolApi {
             next(err);
         }
     }
+    static async getToolSearch(req, res, next) {
+        try {
+            const tools = await Tool.find({
+                $and:[{renterEmail:null},
+                    {
+                    $or: [
+                    { name: { $regex: new RegExp(req.params.search,"i") } },
+                    { category: { $regex: new RegExp(req.params.search,"i") } },
+                    { description: { $regex: new RegExp(req.params.search,"i") } },
+                  ]
+                }
+                ]
+              })
+            res.status(200).json({
+                tools
+            });
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    }
 
     static async getToolFiltered(req, res, next) {
         try {

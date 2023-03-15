@@ -14,7 +14,7 @@
         cols="4"
         offset="4"
       >
-        <v-sheet class="pa-2 ma-2">
+        <v-sheet class="pa-2 ma-0">
         <h2>{{tool.name}}</h2>
         </v-sheet>
         <v-sheet class=" ma-2"><p1 class="font-weight-bold">Beskrivelse:</p1></v-sheet>
@@ -24,6 +24,9 @@
           <RouterLink to="/signin" style="text-decoration: none">
             <v-btn v-if="!user.getLoggedIn" color="#FF5F00" class="mt-4" @click="borrowToolLogin(route.params._id, user)">Lån</v-btn>
           </RouterLink>
+        </v-sheet>
+        <v-sheet v-if='tool.renterEmail !== null' class="ma-2">
+          <p5 style="color: #FF5F00" class="font-weight-bold">Verktøy er utleid</p5>
         </v-sheet>
       </v-col>
       <v-sheet class="pa-2 ma-2">

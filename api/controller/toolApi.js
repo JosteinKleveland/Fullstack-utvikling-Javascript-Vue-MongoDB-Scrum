@@ -42,7 +42,7 @@ module.exports = class toolApi {
     }
     static async getToolAvailable(req, res, next) {
         try {
-            const tools = await Tool.find({renterEmail:null});
+            const tools = await Tool.find({renterEmail: null});
             res.status(200).json({
                 tools
             });

@@ -36,16 +36,16 @@ module.exports = class toolApi {
       console.log(err);
       next(err);
     }
-  }
-  static async getToolAvailable(req, res, next) {
-    try {
-      const tools = await Tool.find({ renterEmail: null });
-      res.status(200).json({
-        tools,
-      });
-    } catch (err) {
-      console.log(err);
-      next(err);
+    static async getToolAvailable(req, res, next) {
+        try {
+            const tools = await Tool.find({renterEmail: null});
+            res.status(200).json({
+                tools
+            });
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
     }
   }
   static async getToolSearch(req, res, next) {

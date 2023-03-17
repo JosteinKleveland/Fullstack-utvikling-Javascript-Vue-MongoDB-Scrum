@@ -93,6 +93,7 @@
               <v-card>
                 <v-img :src="tool.image" height="200"></v-img>
                 <v-card-title>{{ tool.name }}</v-card-title>
+                <v-card-text>Pris: {{ tool.price }}kr</v-card-text>
                 <v-card-text>{{ tool.description }}</v-card-text>
                 <v-card-actions>
                   <RouterLink

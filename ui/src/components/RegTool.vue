@@ -15,7 +15,10 @@
       ></v-text-field>
       <v-text-field
         v-model="priceField"
-        :rules="[(v) => !!v || 'Field is required']"
+        :rules="[
+          (v) => !!v || 'Field is required',
+          (v) => v >= 0 || 'Price must be greater than or equal to 0',
+        ]"
         label="Price"
         type="number"
         id="priceField"

@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept",
   );
   res.header(
-    "Access-Control-Allow-Methods", "GET, POST, DELETE, UPDATE, OPTIONS"
+    "Access-Control-Allow-Methods", "GET, POST, UPDATE, OPTIONS"
   )
   next();
 });

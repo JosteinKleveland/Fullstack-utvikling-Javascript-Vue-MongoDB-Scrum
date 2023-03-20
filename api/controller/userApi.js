@@ -38,7 +38,8 @@ module.exports = class userAPI {
   }
   static async fetchUser(req, res, next) {
     try {
-      const user = await User.findOne({ _id: req.params._id });
+      const user = await User.findOne({ _id: req.params._id },
+        { password: 0 });
       if (user == null) {
         res.status(404).json({
           success: false,
@@ -50,6 +51,29 @@ module.exports = class userAPI {
           user,
         });
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async fetchUserEmail(req, res, next) {
+    try {
+      const user = await User.findOne({ email: req.params.email },
+        { password: 0 });
+      if (user == null) {
+        res.status(404).json({
+          success: false,
+          message: "No user with such email",
+        });
+      } else {
+        res.status(201).json({
+          success: true,
+          user,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
   }
 };

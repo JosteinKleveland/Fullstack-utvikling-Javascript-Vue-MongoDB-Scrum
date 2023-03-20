@@ -47,6 +47,7 @@
       <v-card-subtitle class="pt-1">
                 {{tool.lenderEmail}}
               </v-card-subtitle>
+              <v-btn color="FF5F00" class="mt-4" @click="pushProfile()" >Gå til profil</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -117,8 +118,12 @@ export default {
         console.log(user.getRentState.rentState);
         user.setRentState(id);
         console.log(user.getRentState.rentState);
+      },
+      pushProfile(){
+        console.log(this.tool.lenderEmail)
+        this.$router.push(`/profile/${this.tool.lenderEmail}`);
       }
     }
   }
-
+  
 </script>

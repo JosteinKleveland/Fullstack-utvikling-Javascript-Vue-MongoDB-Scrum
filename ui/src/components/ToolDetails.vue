@@ -66,6 +66,16 @@
           <v-card-item>Pris: {{ tool.price }}kr</v-card-item>
         </v-sheet>
       </v-row>
+      <v-sheet v-if="user.getLoggedIn" class="ma-2">
+        <RouterLink :to="`/editTool/${tool._id}`" style="text-decoration: none">
+          <v-btn
+            v-if="user.getUser.email == tool.lenderEmail"
+            color="#FF5F00"
+            class="mt-4"
+            >Rediger</v-btn
+          >
+        </RouterLink>
+      </v-sheet>
       <v-row class="mb-6" no-gutters>
         <v-col cols="3" offset="3">
           <v-card-text>

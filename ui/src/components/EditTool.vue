@@ -18,15 +18,21 @@
         type="number"
         id="priceField"
       ></v-text-field>
-      <v-text-field
+      <v-select
         v-model="categoryField"
-        :rules="[(v) => !!v || 'Field is required',
-                 (v) => (v && v.length > 1) || 'Category must be at least 2 characters',
-                 (v) => (v && v.length < 33) || 'Category must be less than 33 characters']"
         label="Category"
-        type="text"
         id="categoryField"
-      ></v-text-field>
+        :items="[
+          'Hagearbeid',
+          'Kjøkkenredskaper',
+          'Rengjøring',
+          'Baderom',
+          'Garasjen',
+          'Bil',
+        ]"
+        :rules="[(v) => !!v || 'Field is required']"
+        clearable
+      ></v-select>
       <v-text-field
         v-model="descriptionField"
         :rules="[(v) => !!v || 'Field is required',

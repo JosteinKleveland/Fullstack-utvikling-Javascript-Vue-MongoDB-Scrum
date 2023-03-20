@@ -152,6 +152,23 @@ module.exports = class toolApi {
     }
   }
 
+  static async markToolDeleted(req, res, next) {
+    try {
+      const tool = await Tool.findByIdAndUpdate(req.params._id, {
+        renterEmail: "Deleted",
+      });
+      const updatedTool = await Tool.findById(req.params._id);
+      res.status(200).json({
+        success: true,
+        tool,
+        updatedTool,
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
   static async rentTool(req, res, next) {
     try {
       const tool = await Tool.findByIdAndUpdate(req.params._id, {

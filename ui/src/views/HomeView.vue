@@ -7,6 +7,7 @@
           <v-row>
             <v-col>
               <v-text-field
+                v-model="searchField"
                 class="search-bar flex-grow-1"
                 density="compact"
                 variant="solo"
@@ -14,26 +15,19 @@
                 append-inner-icon="mdi-magnify"
                 single-line
                 hide-details
-                @click:append-inner="onClick"
+                @input="getSearch()"
               ></v-text-field>
               <v-row class="checkbox-row">
                 <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 1"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 2"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 3"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 4"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 5"></v-checkbox>
-                </v-col>
-                <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
-                  <v-checkbox label="Checkbox 6"></v-checkbox>
+                  <v-radio-group v-model="selectedCategory">
+                    <v-radio
+                      v-for="(category, index) in categories"
+                      :key="index"
+                      :label="category.name"
+                      :value="category.name"
+                      @click="deselectRadio"
+                    ></v-radio>
+                  </v-radio-group>
                 </v-col>
               </v-row>
             </v-col>
@@ -48,10 +42,11 @@
                 label="Sort By Price"
                 :items="['High-Low', 'Low-High']"
                 variant="solo"
+                v-model="selectedSortOption"
+                @update:model-value="getSortedTools"
               ></v-select>
             </v-col>
           </v-row>
-
           <!-- Price sort by input -->
           <v-row>
             <v-col cols="6" sm="6" class="sortInput">
@@ -98,6 +93,7 @@
               <v-card>
                 <v-img :src="tool.image" height="200"></v-img>
                 <v-card-title>{{ tool.name }}</v-card-title>
+                <v-card-text>Pris: {{ tool.price }}kr</v-card-text>
                 <v-card-text>{{ tool.description }}</v-card-text>
                 <v-card-actions>
                   <RouterLink
@@ -133,34 +129,147 @@ export default {
   data() {
     return {
       tools: [],
+      selectedCategory: "",
+      tempTools: [],
       positiveNumber: 0,
       anyNumber: 0,
+      selectedSortOption: null,
       positiveNumberRules: [
         (v) => !!v || "Positive number is required",
         (v) => v >= 0 || "Positive number cannot be negative",
       ],
+      categories: [
+        { name: "Hagearbeid", id: 1 },
+        { name: "Kjøkkenredskaper", id: 2 },
+        { name: "Rengjøring", id: 3 },
+        { name: "Baderom", id: 4 },
+        { name: "Garasjen", id: 5 },
+        { name: "Bil", id: 6 },
+      ],
+      searchField: "",
     };
+  },
+  computed: {
+    filteredTools() {
+      return this.tools.filter(
+        (tool) => tool.category === this.selectedCategory
+      );
+    },
   },
   methods: {
     sortNumbers() {
       // Add your sorting logic here
       console.log("Sorting numbers");
     },
+    getSearch() {
+      if (this.searchField == "") {
+        this.fetchAllTools();
+      } else {
+        axios({
+          method: "GET",
+          url:
+            "http://localhost:5050/api/tool/getTool/search/" + this.searchField,
+        }).then(
+          (response) => {
+            this.tools = response.data.tools;
+            this.tempTools = response.data.tools;
+          },
+          (error) => {
+            console.error(error.message);
+          }
+        );
+      }
+    },
+
+    fetchTools() {
+      // Get the selected category name
+      const selectedCategory = this.categories.find(
+        (c) => c.id === this.selectedCategory
+      )?.name;
+      // Call the API endpoint to fetch the tools with the selected category name
+      axios
+        .get(
+          `http://localhost:5050/api/tool/getTool/filter/category/match/${selectedCategory}`
+        )
+        .then((response) => {
+          console.log(response.data);
+          this.tools = response.data.tools;
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    },
+
+    fetchAllTools() {
+      axios({
+        method: "GET",
+        url: "http://localhost:5050/api/tool/getTool/available",
+      }).then(
+        (response) => {
+          console.log(response.data);
+          this.tools = response.data.tools;
+        },
+        (error) => {
+          console.error(error.message);
+        }
+      );
+    },
+
+    deselectRadio() {
+      if (this.selectedCategory) {
+        this.selectedCategory = "";
+        this.fetchAllTools();
+      }
+    },
+    getSortedTools() {
+      if (this.selectedSortOption == "Low-High") {
+        // Sort the tools by price from low to high
+        axios
+          .get(
+            `http://localhost:5050/api/tool/getTool/filter/price/priceLowToHigh`
+          )
+          .then((response) => {
+            this.tools = response.data.tools;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (this.selectedSortOption == "High-Low") {
+        // Sort the tools by price from high to low
+        axios
+          .get(
+            `http://localhost:5050/api/tool/getTool/filter/price/priceHighToLow`
+          )
+          .then((response) => {
+            this.tools = response.data.tools;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    },
   },
 
   mounted() {
-    axios({
-      method: "GET",
-      url: "http://localhost:5050/api/tool/getTool/available",
-    }).then(
-      (response) => {
-        console.log(response.data);
-        this.tools = response.data.tools;
-      },
-      (error) => {
-        console.error(error.message);
-      }
-    );
+    this.fetchTools();
+    this.fetchAllTools();
+  },
+
+  watch: {
+    selectedCategory(newVal) {
+      axios({
+        method: "GET",
+        url: `http://localhost:5050/api/tool/getTool/filter/category/match/${newVal}`,
+      }).then(
+        (response) => {
+          console.log(response.data);
+          this.tools = response.data.tools;
+        },
+        (error) => {
+          console.error(error.message);
+        }
+      );
+    },
   },
 };
 </script>
@@ -187,8 +296,5 @@ export default {
   margin-top: 5px !important;
   padding: 5px;
   height: 70px;
-}
-
-.sortButton {
 }
 </style>

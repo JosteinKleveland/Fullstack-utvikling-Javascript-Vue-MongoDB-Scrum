@@ -6,6 +6,7 @@ import ToolDetails from "../views/DisplayView.vue";
 import RegTool from "../views/RegToolView.vue";
 import EditTool from "../views/EditToolView.vue";
 import UserProfile from "../views/ProfileView.vue";
+import LenderProfile from "../views/LenderView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -45,6 +46,11 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: UserProfile,
+    },
+    {
+      path: "/profile/:email",
+      name: "profile2",
+      component: LenderProfile,
     },
   ],
 });

@@ -66,19 +66,31 @@
                 <v-card>
                   <v-img :src="tool.image" height="200"></v-img>
                   <v-card-title>{{ tool.name }}</v-card-title>
+                  <v-card-text>Pris: {{ tool.price }}kr</v-card-text>
                   <v-card-text>{{ tool.description }}</v-card-text>
                   <v-card-actions>
-                    <RouterLink
-                      :to="`/toolDetails/${tool._id}`"
-                      style="text-decoration: none"
-                    >
-                      <v-btn
-                        color="#FF5F00"
-                        @click="router.push(`/toolDetails/${tool._id}`)"
-                        text
-                        >Detaljer</v-btn
+                    <v-col>
+                      <RouterLink
+                        :to="`/toolDetails/${tool._id}`"
+                        style="text-decoration: none"
                       >
-                    </RouterLink>
+                        <v-btn
+                          color="#FF5F00"
+                          @click="router.push(`/toolDetails/${tool._id}`)"
+                          text
+                          >Detaljer</v-btn
+                        >
+                      </RouterLink>
+                    </v-col>
+
+                    <v-col class="text-right">
+                      <v-card-text
+                        v-if="tool.renterEmail !== null"
+                        class="font-weight-bold"
+                        style="color: #ff5f00"
+                        >Verktøy er utleid</v-card-text
+                      >
+                    </v-col>
                   </v-card-actions>
                 </v-card>
               </v-col>

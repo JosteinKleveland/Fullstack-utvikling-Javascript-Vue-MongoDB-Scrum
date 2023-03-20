@@ -34,12 +34,15 @@
             </RouterLink>
           </v-sheet>
 
-          <v-sheet v-if="user.getLoggedIn" class="ma-2">
+          <v-sheet
+            v-if="user.getLoggedIn && tool.renterEmail !== 'Deleted'"
+            class="ma-2"
+          >
             <v-btn
               v-if="tool.lenderEmail == user.getUser.email"
               color="#FF2A00"
               class="mt-4"
-              @click="deleteTool(route.params._id)"
+              @click="markToolDeleted(route.params._id)"
               >Slett annonse</v-btn
             >
           </v-sheet>
@@ -145,10 +148,10 @@ export default {
       console.log(this.tool.lenderEmail);
       this.$router.push(`/profile/${this.tool.lenderEmail}`);
     },
-    deleteTool(id) {
+    markToolDeleted(id) {
       axios({
-        method: "delete",
-        url: `http://localhost:5050/api/tool/delTool/${id}`,
+        method: "post",
+        url: `http://localhost:5050/api/tool/markToolDeleted/${id}`,
       })
         .then((response) => {
           console.log(response.data);

@@ -47,9 +47,18 @@
             >
           </v-sheet>
 
-          <v-sheet v-if="tool.renterEmail !== null" class="ma-2">
-            <p5 style="color: #ff5f00" class="font-weight-bold"
-              >Verktøy er utleid</p5
+          <v-sheet class="ma-2">
+            <p5
+              v-if="tool.renterEmail == 'Deleted'"
+              style="color: #ff5f00"
+              class="font-weight-bold"
+              >Annonsen er slettet</p5
+            >
+            <p5
+              v-else-if="tool.renterEmail !== null"
+              style="color: #ff5f00"
+              class="font-weight-bold"
+              >Verktøyet er utlånt</p5
             >
           </v-sheet>
         </v-col>

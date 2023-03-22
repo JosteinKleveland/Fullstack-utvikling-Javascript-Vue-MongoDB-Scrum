@@ -15,7 +15,7 @@
                 append-inner-icon="mdi-magnify"
                 single-line
                 hide-details
-                @input="getSearch()"
+                @input="getSearch"
               ></v-text-field>
               <v-row class="checkbox-row">
                 <v-col class="checkbox-col" cols="6" sm="12" md="12" lg="12">
@@ -43,7 +43,6 @@
                 :items="['High-Low', 'Low-High']"
                 variant="solo"
                 v-model="selectedSortOption"
-                @update:model-value="getSortedTools"
               ></v-select>
             </v-col>
           </v-row>
@@ -67,8 +66,8 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-btn color="primary" @click="sortNumbers" class="sortButton"
-                >Sort</v-btn
+              <v-btn color="primary" @click="resetFilters" class="resetButton"
+                >Reset</v-btn
               >
             </v-col>
           </v-row>
@@ -81,8 +80,9 @@
         <v-container>
           <v-row>
             <v-col
-              v-for="tool in tools"
+              v-for="tool in searchedTools"
               :key="tool.id"
+              :value="tool.name"
               cols="12"
               xs="12"
               sm="6"
@@ -147,59 +147,43 @@ export default {
         { name: "Bil", id: 6 },
       ],
       searchField: "",
+      hasCategory: false,
     };
   },
   computed: {
-    filteredTools() {
-      return this.tools.filter(
-        (tool) => tool.category === this.selectedCategory
+    searchedTools() {
+      let includesSearch = this.tools.filter(
+        (tool) => (tool.name.toLowerCase().includes(this.searchField.toLowerCase())||tool.description.toLowerCase().includes(this.searchField.toLowerCase())||tool.category.toLowerCase().includes(this.searchField.toLowerCase()))
       );
+      if (this.selectedCategory!=""){
+        includesSearch = includesSearch.filter(
+        (tool) => (tool.category == this.selectedCategory)
+        )
+      }
+      if (this.selectedSortOption == 'High-Low'){
+        includesSearch = includesSearch.sort(
+          (tool1, tool2) => tool2.price - tool1.price
+        )
+      }
+      if (this.selectedSortOption == 'Low-High'){
+        includesSearch = includesSearch.sort(
+          (tool1, tool2) => tool1.price - tool2.price
+        )
+      }
+      if (this.anyNumber > 0) {
+        includesSearch = includesSearch.filter(
+          (tool) => tool.price >= this.positiveNumber && tool.price <= this.anyNumber
+          )
+      }
+      else {
+        includesSearch = includesSearch.filter(
+          (tool) => tool.price >= this.positiveNumber
+          )
+      }
+      return includesSearch
     },
   },
   methods: {
-    sortNumbers() {
-      // Add your sorting logic here
-      console.log("Sorting numbers");
-    },
-    getSearch() {
-      if (this.searchField == "") {
-        this.fetchAllTools();
-      } else {
-        axios({
-          method: "GET",
-          url:
-            "http://localhost:5050/api/tool/getTool/search/" + this.searchField,
-        }).then(
-          (response) => {
-            this.tools = response.data.tools;
-            this.tempTools = response.data.tools;
-          },
-          (error) => {
-            console.error(error.message);
-          }
-        );
-      }
-    },
-
-    fetchTools() {
-      // Get the selected category name
-      const selectedCategory = this.categories.find(
-        (c) => c.id === this.selectedCategory
-      )?.name;
-      // Call the API endpoint to fetch the tools with the selected category name
-      axios
-        .get(
-          `http://localhost:5050/api/tool/getTool/filter/category/match/${selectedCategory}`
-        )
-        .then((response) => {
-          console.log(response.data);
-          this.tools = response.data.tools;
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
-    },
-
     fetchAllTools() {
       axios({
         method: "GET",
@@ -214,62 +198,37 @@ export default {
         }
       );
     },
+    resetFilters() {
+      this.selectedCategory = "";
+      this.positiveNumber = 0;
+      this.anyNumber = 0;
+      this.searchField = "";
+      this.selectedSortOption = null;
+    },
 
     deselectRadio() {
       if (this.selectedCategory) {
         this.selectedCategory = "";
-        this.fetchAllTools();
-      }
-    },
-    getSortedTools() {
-      if (this.selectedSortOption == "Low-High") {
-        // Sort the tools by price from low to high
-        axios
-          .get(
-            `http://localhost:5050/api/tool/getTool/filter/price/priceLowToHigh`
-          )
-          .then((response) => {
-            this.tools = response.data.tools;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } else if (this.selectedSortOption == "High-Low") {
-        // Sort the tools by price from high to low
-        axios
-          .get(
-            `http://localhost:5050/api/tool/getTool/filter/price/priceHighToLow`
-          )
-          .then((response) => {
-            this.tools = response.data.tools;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
       }
     },
   },
 
   mounted() {
-    this.fetchTools();
     this.fetchAllTools();
   },
 
   watch: {
     selectedCategory(newVal) {
-      axios({
-        method: "GET",
-        url: `http://localhost:5050/api/tool/getTool/filter/category/match/${newVal}`,
-      }).then(
-        (response) => {
-          console.log(response.data);
-          this.tools = response.data.tools;
-        },
-        (error) => {
-          console.error(error.message);
-        }
-      );
+      this.selectedCategory = newVal;
+      console.log(newVal);
+
     },
+    anyNumber() {
+      if(this.anyNumber == "") this.anyNumber = 0;
+    },
+    positiveNumber() {
+      if(this.positiveNumber == "") this.positiveNumber = 0;
+    }
   },
 };
 </script>

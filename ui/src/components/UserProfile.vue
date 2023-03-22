@@ -148,30 +148,29 @@
           <v-container fluid>
             <v-row>
               <v-col
-                cols="12"
-                lg="12"
-                md="12"
                 class="historikk"
-                v-for="tool in rentedTools"
+                v-for="tool in history"
                 :key="tool.id"
+                cols="12"
+                xs="12"
+                sm="12"
+                md="12"
+                lg="12"
+                xl="12"
               >
-                <p>
-                  {{ userData.firstName }} har leid {{ tool.name }} av
+                <a
+                  v-if="
+                    (tool.renterEmail != null &&
+                      tool.renterEmail != 'Deleted' &&
+                      tool.renterEmail == userData.email) ||
+                    (tool.renterEmail != null &&
+                      tool.renterEmail != 'Deleted' &&
+                      tool.lenderEmail == userData.email)
+                  "
+                >
+                  {{ tool.renterEmail }} leide {{ tool.name }} av
                   {{ tool.lenderEmail }}
-                </p>
-              </v-col>
-              <v-col
-                cols="12"
-                lg="12"
-                md="12"
-                class="historikk"
-                v-for="tool in rentedTools"
-                :key="tool.id"
-              >
-                <p>
-                  {{ tool.renterEmail }} har leid {{ tool.name }} av
-                  {{ userData.firstName }}
-                </p>
+                </a>
               </v-col>
             </v-row>
           </v-container>
@@ -191,7 +190,7 @@ export default {
       userData: [],
       tools: [],
       rentedTools: [],
-      lendedTools: [],
+      history: [],
       tab: null,
     };
   },
@@ -218,6 +217,17 @@ export default {
       .then((response) => {
         console.log(response.data);
         this.rentedTools = response.data.tools;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    axios({
+      method: "GET",
+      url: `http://localhost:5050/api/tool/getTool/all`,
+    })
+      .then((response) => {
+        console.log(response.data);
+        this.history = response.data.tools;
       })
       .catch((error) => {
         console.error(error);

@@ -1,22 +1,26 @@
 <template>
   <div>
     <v-toolbar color="#FF5F00">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
+      <v-icon icon="mdi-hammer-wrench" size="large" class="ma-4"></v-icon>
       <RouterLink to="/" style="text-decoration: none"> 
-        <v-toolbar-title style="color: black">Tool Time</v-toolbar-title>
+        <v-toolbar-title style="color: black" class="text-h5">Tool Time</v-toolbar-title>
       </RouterLink>
 
       <v-spacer></v-spacer>
-      <v-btn @click="toggleTheme" color="black">Dark/Light Mode</v-btn>
+      <v-btn @click="toggleTheme" color="black">
+        
+        <v-icon v-if="theme.global.current.value.dark" icon="mdi-weather-sunny" size="large"></v-icon>
+        <v-icon v-if="!theme.global.current.value.dark" icon="mdi-weather-night" size="large"></v-icon>
+                
+      </v-btn>
       <RouterLink to="/signin" style="text-decoration: none">
         <v-btn v-if="!user.getLoggedIn" flat value="signin" color="black"
-          >Sign In</v-btn
+          >Log in</v-btn
         >
       </RouterLink>
       <RouterLink to="/signup" style="text-decoration: none">
         <v-btn v-if="!user.getLoggedIn" flat value="signup" color="black"
-          >Sign Up</v-btn
+          >Sign up</v-btn
         >
       </RouterLink>
       <RouterLink to="/profile" style="text-decoration: none">

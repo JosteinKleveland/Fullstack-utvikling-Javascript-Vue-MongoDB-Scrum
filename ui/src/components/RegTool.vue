@@ -59,9 +59,15 @@
         prepend-icon="mdi-camera"
         id="imageField"
       ></v-file-input>
-      <v-btn type="submit" block class="mt-2">Register</v-btn>
+      <span v-if="!user.getLoggedIn" style="color:#FF5F00"><p class="text-center">Log in to register tool</p></span>
+      <v-btn type="submit" block class="mt-2" v-if="user.getLoggedIn">Register</v-btn>
+
+      <RouterLink to="/signin" style="text-decoration: none">
+        <v-btn v-if="!user.getLoggedIn" block class="mt-2">Register</v-btn>
+      </RouterLink>
     </v-form>
   </v-sheet>
+  
   <img :src="buffer" />
 </template>
 

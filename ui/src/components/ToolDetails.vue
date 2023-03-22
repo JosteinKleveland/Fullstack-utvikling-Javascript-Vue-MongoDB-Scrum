@@ -17,7 +17,7 @@
           <v-sheet class="ma-2">{{ tool.description }}</v-sheet>
           <v-sheet v-if="tool.renterEmail == null" class="ma-2">
             <v-btn
-              v-if="user.getLoggedIn"
+              v-if="user.getLoggedIn && tool.lenderEmail != user.getUser.email"
               color="#FF5F00"
               class="mt-4"
               @click="borrowTool(route.params._id, user.getUser.email)"
@@ -105,7 +105,6 @@ import axios from "axios";
 import { useRoute } from "vue-router";
 import swal from "sweetalert";
 import { userStore } from "@/stores/user";
-
 
 export default {
   data() {

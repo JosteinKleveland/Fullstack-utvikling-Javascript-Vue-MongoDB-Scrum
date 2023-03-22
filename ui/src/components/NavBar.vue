@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar color="#FF5F00">
-      <v-icon icon="mdi-hammer-wrench" size="large" class="ma-4"></v-icon>
+      <v-icon icon="mdi-hammer-wrench" size="large" class="ma-4" style="color: black"></v-icon>
       <RouterLink to="/" style="text-decoration: none"> 
         <v-toolbar-title style="color: black" class="text-h5">Tool Time</v-toolbar-title>
       </RouterLink>

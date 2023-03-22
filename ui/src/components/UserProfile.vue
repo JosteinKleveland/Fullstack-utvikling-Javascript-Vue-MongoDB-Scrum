@@ -43,9 +43,9 @@
 
   <v-card>
     <v-tabs v-model="tab">
-      <v-tab class="v-tabs__item" :value="1">Annonser</v-tab>
-      <v-tab class="v-tabs__item" :value="2">Historikk</v-tab>
-      <v-tab class="v-tabs__item" :value="3">Vurderinger</v-tab>
+      <v-tab class="v-tabs__item" :value="1">Dine Annonser</v-tab>
+      <v-tab class="v-tabs__item" :value="2">Leide Annonser</v-tab>
+      <v-tab class="v-tabs__item" :value="3">Historikk</v-tab>
     </v-tabs>
 
     <v-card>
@@ -100,8 +100,46 @@
         <v-window-item :value="2">
           <v-container fluid>
             <v-row>
-              <v-col cols="12" md="4">
-                <h1>Hello</h1>
+              <v-col
+                v-for="tool in rentedTools"
+                :key="tool.id"
+                cols="12"
+                xs="12"
+                sm="6"
+                md="4"
+                lg="4"
+                xl="4"
+              >
+                <v-card>
+                  <v-img :src="tool.image" height="200"></v-img>
+                  <v-card-title>{{ tool.name }}</v-card-title>
+                  <v-card-text>Pris: {{ tool.price }}kr</v-card-text>
+                  <v-card-text>{{ tool.description }}</v-card-text>
+                  <v-card-actions>
+                    <v-col>
+                      <RouterLink
+                        :to="`/toolDetails/${tool._id}`"
+                        style="text-decoration: none"
+                      >
+                        <v-btn
+                          color="#FF5F00"
+                          @click="router.push(`/toolDetails/${tool._id}`)"
+                          text
+                          >Detaljer</v-btn
+                        >
+                      </RouterLink>
+                    </v-col>
+
+                    <v-col class="text-right">
+                      <v-card-text
+                        v-if="tool.renterEmail !== null"
+                        class="font-weight-bold"
+                        style="color: #ff5f00"
+                        >Verktøy er utleid</v-card-text
+                      >
+                    </v-col>
+                  </v-card-actions>
+                </v-card>
               </v-col>
             </v-row>
           </v-container>
@@ -109,8 +147,31 @@
         <v-window-item :value="3">
           <v-container fluid>
             <v-row>
-              <v-col cols="12" md="4">
-                <h1>Hello3</h1>
+              <v-col
+                cols="12"
+                lg="12"
+                md="12"
+                class="historikk"
+                v-for="tool in rentedTools"
+                :key="tool.id"
+              >
+                <p>
+                  {{ userData.firstName }} har leid {{ tool.name }} av
+                  {{ tool.lenderEmail }}
+                </p>
+              </v-col>
+              <v-col
+                cols="12"
+                lg="12"
+                md="12"
+                class="historikk"
+                v-for="tool in rentedTools"
+                :key="tool.id"
+              >
+                <p>
+                  {{ tool.renterEmail }} har leid {{ tool.name }} av
+                  {{ userData.firstName }}
+                </p>
               </v-col>
             </v-row>
           </v-container>
@@ -129,6 +190,8 @@ export default {
     return {
       userData: [],
       tools: [],
+      rentedTools: [],
+      lendedTools: [],
       tab: null,
     };
   },
@@ -144,6 +207,17 @@ export default {
       .then((response) => {
         console.log(response.data);
         this.tools = response.data.tools;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    axios({
+      method: "GET",
+      url: `http://localhost:5050/api/tool/getTool/filter/renterEmail/match/${user.getUser.email}`,
+    })
+      .then((response) => {
+        console.log(response.data);
+        this.rentedTools = response.data.tools;
       })
       .catch((error) => {
         console.error(error);
@@ -166,5 +240,9 @@ v-card {
   flex: 1;
   justify-content: center;
   align-items: center;
+}
+
+.historikk {
+  text-align: center;
 }
 </style>

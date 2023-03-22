@@ -14,5 +14,5 @@ router.get('/getTool/available', toolApi.getToolAvailable);
 router.get('/getTool/filter/:attr/:mode', toolApi.getToolFiltered);
 router.get('/getTool/filter/:attr/:mode/:value1', toolApi.getToolFiltered);
 router.get('/getTool/filter/:attr/:mode/:value1/:value2', toolApi.getToolFiltered);
-
+router.post('/stopRental/:_id', toolApi.stopRental);
 module.exports = router;

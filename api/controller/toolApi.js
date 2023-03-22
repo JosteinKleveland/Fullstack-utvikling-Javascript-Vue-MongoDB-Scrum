@@ -81,7 +81,7 @@ module.exports = class toolApi {
       switch (mode) {
         // Parameter matches single value
         case "match":
-          tools = await Tool.find({ [attr]: value1, renterEmail: null });
+          tools = await Tool.find({ [attr]: value1 });
           res.status(200).json({
             tools,
           });
@@ -199,5 +199,18 @@ module.exports = class toolApi {
       console.log(err);
       next(err);
     }
+  }
+
+  static async stopRental(req, res, next) {
+    try {
+      const tool = await Tool.findOneAndUpdate({_id:req.params._id}, {renterEmail: null});
+      res.status(200).json({
+        success: true,
+        tool,
+      });
+    } catch (error) {
+      console.log(err);
+      next(err);
+    } 
   }
 };

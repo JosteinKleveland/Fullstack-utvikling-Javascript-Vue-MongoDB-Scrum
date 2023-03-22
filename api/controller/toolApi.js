@@ -86,6 +86,12 @@ module.exports = class toolApi {
             tools,
           });
           break;
+        case "rented":
+          tools = await Tool.find({ [attr]: value1 });
+          res.status(200).json({
+            tools,
+          });
+          break;
         case "between":
           tools = await Tool.find({ [attr]: { $gt: value1, $lt: value2 } });
           res.status(200).json({

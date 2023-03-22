@@ -147,8 +147,31 @@
         <v-window-item :value="3">
           <v-container fluid>
             <v-row>
-              <v-col cols="12" md="4">
-                <h1>Hello3</h1>
+              <v-col
+                cols="12"
+                lg="12"
+                md="12"
+                class="historikk"
+                v-for="tool in rentedTools"
+                :key="tool.id"
+              >
+                <p>
+                  {{ userData.firstName }} har leid {{ tool.name }} av
+                  {{ tool.lenderEmail }}
+                </p>
+              </v-col>
+              <v-col
+                cols="12"
+                lg="12"
+                md="12"
+                class="historikk"
+                v-for="tool in rentedTools"
+                :key="tool.id"
+              >
+                <p>
+                  {{ tool.renterEmail }} har leid {{ tool.name }} av
+                  {{ userData.firstName }}
+                </p>
               </v-col>
             </v-row>
           </v-container>
@@ -168,6 +191,7 @@ export default {
       userData: [],
       tools: [],
       rentedTools: [],
+      lendedTools: [],
       tab: null,
     };
   },
@@ -189,7 +213,7 @@ export default {
       });
     axios({
       method: "GET",
-      url: `http://localhost:5050/api/tool/getTool/filter/renterEmail/rented/${user.getUser.email}`,
+      url: `http://localhost:5050/api/tool/getTool/filter/renterEmail/match/${user.getUser.email}`,
     })
       .then((response) => {
         console.log(response.data);
@@ -216,5 +240,9 @@ v-card {
   flex: 1;
   justify-content: center;
   align-items: center;
+}
+
+.historikk {
+  text-align: center;
 }
 </style>

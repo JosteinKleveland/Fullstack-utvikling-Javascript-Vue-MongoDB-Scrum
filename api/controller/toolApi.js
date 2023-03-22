@@ -81,12 +81,6 @@ module.exports = class toolApi {
       switch (mode) {
         // Parameter matches single value
         case "match":
-          tools = await Tool.find({ [attr]: value1, renterEmail: null });
-          res.status(200).json({
-            tools,
-          });
-          break;
-        case "rented":
           tools = await Tool.find({ [attr]: value1 });
           res.status(200).json({
             tools,

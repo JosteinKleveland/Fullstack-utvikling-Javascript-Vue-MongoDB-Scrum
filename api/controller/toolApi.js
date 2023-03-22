@@ -206,4 +206,17 @@ module.exports = class toolApi {
       next(err);
     }
   }
+
+  static async stopRental(req, res, next) {
+    try {
+      const tool = await Tool.findOneAndUpdate({_id:req.params._id}, {renterEmail: null});
+      res.status(200).json({
+        success: true,
+        tool,
+      });
+    } catch (error) {
+      console.log(err);
+      next(err);
+    } 
+  }
 };

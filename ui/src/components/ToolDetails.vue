@@ -45,6 +45,13 @@
               @click="markToolDeleted(route.params._id)"
               >Slett annonse</v-btn
             >
+            <v-btn
+            v-if="tool.renterEmail == user.getUser.email"
+            color="#FF5F00"
+            class="mt-4"
+            @click="stopRental(route.params._id)"
+            >Avslutt leie</v-btn
+          >
           </v-sheet>
 
           <v-sheet class="ma-2">
@@ -99,6 +106,7 @@ import { useRoute } from "vue-router";
 import swal from "sweetalert";
 import { userStore } from "@/stores/user";
 
+
 export default {
   data() {
     return {
@@ -134,6 +142,30 @@ export default {
     );
   },
   methods: {
+    stopRental(id) {
+      const axiosConfig = {
+        method: "POST",
+        // TODO: Once the method of retriving userdata is available, add the users email to the url below
+        url: "http://localhost:5050/api/tool/stopRental/" + id,
+      };
+
+      axios(axiosConfig)
+        .then((response) => {
+          if (response.data.success) {
+            console.log("Response: ", response.data);
+            swal({
+              title: "Leieforhold avsluttet!",
+              text: "Takk for at du bennytet tjenesten!",
+              icon: "success",
+            }).then(() => {
+              this.$router.push("/");
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    },
     borrowTool(id, email) {
       const axiosConfig = {
         method: "post",

@@ -17,7 +17,7 @@
         type="password"
         id="password"
       ></v-text-field>
-      <v-btn type="submit" block class="mt-2">Login</v-btn>
+      <v-btn type="submit" block class="mt-2">Log in</v-btn>
     </v-form>
   </v-sheet>
 </template>

@@ -36,9 +36,11 @@ const toolSchema = new mongoose.Schema({
         minlength: [2, 'Description too short'],
         maxlength: [100, 'Description too long']
     },
-    imgUrl: {
+    image: {
         type: String,
-    }
+    },
+
+
 },{timestamps: true});
 
 module.exports = mongoose.model("Tool", toolSchema);

@@ -6,14 +6,22 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 // const cors = require("cors");
 
+
+// Increase Payload size limit to 50mb
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 // Allows http requests from frontend port
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
   // res.header("Access-Control-Allow-Origin", "http://localhost:8081");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
+  res.header(
+    "Access-Control-Allow-Methods", "GET, POST, UPDATE, OPTIONS"
+  )
   next();
 });
 // app.use(cors);

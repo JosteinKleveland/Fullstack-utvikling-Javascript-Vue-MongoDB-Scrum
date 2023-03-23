@@ -46,12 +46,12 @@
               >Slett annonse</v-btn
             >
             <v-btn
-            v-if="tool.renterEmail == user.getUser.email"
-            color="#FF5F00"
-            class="mt-4"
-            @click="stopRental(route.params._id)"
-            >Avslutt leie</v-btn
-          >
+              v-if="tool.renterEmail == user.getUser.email"
+              color="#FF5F00"
+              class="mt-4"
+              @click="stopRental(route.params._id)"
+              >Avslutt leie</v-btn
+            >
           </v-sheet>
 
           <v-sheet class="ma-2">
@@ -62,7 +62,7 @@
               >Annonsen er slettet</p5
             >
             <p5
-              v-else-if="tool.renterEmail !== null"
+              v-else-if="tool.renterEmail != null"
               style="color: #ff5f00"
               class="font-weight-bold"
               >Verktøyet er utlånt</p5

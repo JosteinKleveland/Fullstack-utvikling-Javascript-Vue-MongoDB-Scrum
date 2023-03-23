@@ -76,7 +76,7 @@
                       >
                         <v-btn
                           color="#FF5F00"
-                          @click="router.push(`/toolDetails/${tool._id}`)"
+                          @click="$router.push(`/toolDetails/${tool._id}`)"
                           text
                           >Detaljer</v-btn
                         >
@@ -123,7 +123,7 @@
                       >
                         <v-btn
                           color="#FF5F00"
-                          @click="router.push(`/toolDetails/${tool._id}`)"
+                          @click="$router.push(`/toolDetails/${tool._id}`)"
                           text
                           >Detaljer</v-btn
                         >
@@ -168,8 +168,8 @@
                       tool.lenderEmail == userData.email)
                   "
                 >
-                  {{ tool.renterEmail }} leide {{ tool.name }} av
-                  {{ tool.lenderEmail }}
+                  <b>{{ tool.renterEmail }}</b> leide <b>{{ tool.name }}</b> av
+                  <b>{{ tool.lenderEmail }}</b>
                 </a>
               </v-col>
             </v-row>

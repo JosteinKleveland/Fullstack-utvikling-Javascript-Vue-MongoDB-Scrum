@@ -3,12 +3,6 @@
 
   
 ## Setup and build
-MongoDB-login
-
->Username: Group47-ToolTime
->
->Password: AQQUrasfSOCT9PDN
-
 
 ### How to run
 Before building the app, run the following:
